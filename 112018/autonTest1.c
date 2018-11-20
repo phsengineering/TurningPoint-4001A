@@ -49,10 +49,29 @@ task autonomous() {
 		motor[DriveRight_1] = -120;
 		motor[DriveRight_2] = -120;
 	}
-stopMotor(DriveLeft_1);
+	wait(.25);
+	motor[DriveLeft_1] = -120;
+		motor[DriveLeft_2] = 120;
+		motor[DriveRight_1] = 120;
+		motor[DriveRight_2] = 120;
+	wait(.5);
+	stopMotor(DriveLeft_1);
 	stopMotor(DriveLeft_2);
 	stopMotor(DriveRight_1);
 	stopMotor(DriveRight_2);
+	wait(.5);
+	motor[DriveLeft_1] = 120;
+	motor[DriveLeft_2] = -120;
+	motor[DriveRight_1] = 120;
+	motor[DriveRight_2] = 120;
+	wait(1);
+	stopMotor(DriveLeft_1);
+	stopMotor(DriveLeft_2);
+	stopMotor(DriveRight_1);
+	stopMotor(DriveRight_2);
+
+	
+	
 }
 
 task MotorSlewRateTask()
