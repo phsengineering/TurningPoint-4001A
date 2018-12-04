@@ -50,7 +50,7 @@ task autonomous() {
 	stopMotor(DriveLeft_2);
 	stopMotor(DriveRight_1);
 	stopMotor(DriveRight_2);
-	wait(2);
+	wait(.5);
 	while(SensorValue[leftQuad] > -100) {
 		motor[DriveLeft_1] = -120;
 		motor[DriveLeft_2] = -120;
@@ -93,7 +93,7 @@ task autonomous() {
 	stopMotor(DriveRight_2);
 	SensorValue[leftQuad] = 0;
 	SensorValue[rightQuad] = 0;
-	while (SensorValue[leftQuad]<900)
+	while (SensorValue[leftQuad]<1300)
 	{
 		motor[DriveLeft_1] = 80;
 		motor[DriveLeft_2] = 80;
@@ -167,7 +167,7 @@ task autonomous() {
 	void
 	DriveLeftMotor( int value )
 	{
-		motorReq[ DriveLeft_1 ] = -value;
+		motorReq[ DriveLeft_1 ] = value;
 		motorReq[ DriveLeft_2 ] = value;
 	}
 
