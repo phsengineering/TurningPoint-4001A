@@ -113,7 +113,7 @@ task MotorSlewRateTask()
 	int motorIndex;
 	int motorTmp;
 
-	// Initialize stuff
+	// Initialize
 	for(motorIndex=0;motorIndex<MOTOR_NUM;motorIndex++)
 	{
 		motorReq[motorIndex] = 0;
@@ -129,7 +129,7 @@ task MotorSlewRateTask()
 			// So we don't keep accessing the internal storage
 			motorTmp = motor[ motorIndex ];
 
-			// Do we need to change the motor value ?
+			// Do we need to change the motor value 
 			if( motorTmp != motorReq[motorIndex] )
 			{
 				// increasing motor value
@@ -145,7 +145,7 @@ task MotorSlewRateTask()
 				if( motorReq[motorIndex] < motorTmp )
 				{
 					motorTmp -= motorSlew[motorIndex];
-					// limit
+					// limit motor
 					if( motorTmp < motorReq[motorIndex] )
 						motorTmp = motorReq[motorIndex];
 				}
@@ -185,7 +185,7 @@ task ArcadeDrive()
 	int    drive_l;
 	int    drive_r;
 
-	// Basic arcade control
+	// Basic arcade control setting
 	while( true )
 	{
 		// Get joystick H and V control
@@ -209,7 +209,7 @@ task ArcadeDrive()
 		DriveLeftMotor( drive_l );
 		DriveRightMotor( drive_r );
 
-		// don't hog CPU
+		// To not hog on CPU
 		wait1Msec( 25 );
 	}
 }
