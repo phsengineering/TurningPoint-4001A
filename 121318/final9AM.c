@@ -78,39 +78,39 @@ task autonomous() {
 	}
 	wait(.25);
 	startTask(fullAllMotors);
-	wait(.5);
+	wait(.25);
 	startTask(stopMotors);
-	wait(.5);
-	//left 324
-	//right 231
-	//left before -440      -177   127
-	//right before -638     -537    487
-	SensorValue[leftQuad] = 0;
-	SensorValue[rightQuad] = 0;
-	SensorValue[gyro] = 0;
-	while(SensorValue[gyro] < 900)
-	{
-		motor[DriveLeft_1] = -80;
-		motor[DriveLeft_2] = -80;
-		motor[DriveRight_1] = 80;
-		motor[DriveRight_2] = 80;
-	}
-	motor[DriveLeft_1] = 120;
-	motor[DriveLeft_2] = 120;
-	motor[DriveRight_1] = -120;
-	motor[DriveRight_2] = -120;
-	wait(0.25);
-	startTask(stopMotors);
-	SensorValue[leftQuad] = 0;
-	SensorValue[rightQuad] = 0;
-	while (SensorValue[leftQuad]<1300)
-	{
-		motor[DriveLeft_1] = 80;
-		motor[DriveLeft_2] = 80;
-		motor[DriveRight_1] = 80;
-		motor[DriveRight_2] = 80;
-	}
-	startTask(stopMotors);
+	//wait(.5);
+	////left 324
+	////right 231
+	////left before -440      -177   127
+	////right before -638     -537    487
+	//SensorValue[leftQuad] = 0;
+	//SensorValue[rightQuad] = 0;
+	//SensorValue[gyro] = 0;
+	//while(SensorValue[gyro] < 900)
+	//{
+	//	motor[DriveLeft_1] = -80;
+	//	motor[DriveLeft_2] = -80;
+	//	motor[DriveRight_1] = 80;
+	//	motor[DriveRight_2] = 80;
+	//}
+	//motor[DriveLeft_1] = 120;
+	//motor[DriveLeft_2] = 120;
+	//motor[DriveRight_1] = -120;
+	//motor[DriveRight_2] = -120;
+	//wait(0.25);
+	//startTask(stopMotors);
+	//SensorValue[leftQuad] = 0;
+	//SensorValue[rightQuad] = 0;
+	//while (SensorValue[leftQuad]<1300)
+	//{
+	//	motor[DriveLeft_1] = 80;
+	//	motor[DriveLeft_2] = 80;
+	//	motor[DriveRight_1] = 80;
+	//	motor[DriveRight_2] = 80;
+	//}
+	//startTask(stopMotors);
 	//left 822
 	//right -601
 }
