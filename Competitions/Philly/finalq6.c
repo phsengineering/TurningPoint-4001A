@@ -1,3 +1,4 @@
+//KNOWN ISSUES WITH IME, ALSO USED FOR Q8
 #pragma config(Sensor, in1,    gyro,           sensorGyro)
 #pragma config(Sensor, I2C_1,  leftQuad,       sensorNone)
 #pragma config(Sensor, I2C_2,  rightQuad,      sensorNone)
