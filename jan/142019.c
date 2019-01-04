@@ -39,7 +39,7 @@ task main() {
 		startTask(fullAllMotors);
 		motor[frontRoller] = 100;
 	}
-	
+
 	startTask(fullReverse);
 	wait(.25);
 	//startTask(stopMotors);
