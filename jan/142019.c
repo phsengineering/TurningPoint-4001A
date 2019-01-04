@@ -70,7 +70,7 @@ task main() {
 	//motor[flywheel2] = 0;
 	//motor[flywheel3] = 0;
 	//motor[frontRoller] = 0;
-	while(SensorValue[rightQuad] < 775) {
+	while(SensorValue[rightQuad] < 780) {
 		startTask(fullAllMotors);
 	}
 	startTask(fullReverse);
@@ -86,14 +86,14 @@ task main() {
 		motor[DriveLeft_2] = 50;
 		motor[DriveRight_1] = -50;
 		motor[DriveRight_2] = -50;
-		wait(.5);
+		wait(.3);
 	//startTask(fullReverse);
 	//wait(.25);
 	startTask(stopMotors);
 	wait(.25);
 	startTask(fullReverse);
-	wait(1);
+	wait(.5);
 	startTask(fullAllMotors);
-	wait(2.5);
+	wait(2.25);
 	startTask(stopMotors);
 }
