@@ -453,6 +453,23 @@ task flywheelCtrl() {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+task forwardMovement() {
+	while(true) {
+		if(vexRT[Btn8U] == 1) {
+
+		motor[DriveLeft_1] = 127;
+		motor[DriveLeft_2] = 127;
+		motor[DriveRight_1] = 127;
+		motor[DriveRight_2] = 127;
+	}
+	if(vexRT[Btn8D] == 1) {
+		motor[DriveLeft_1] = -127;
+		motor[DriveLeft_2] = -127;
+		motor[DriveRight_1] = -127;
+		motor[DriveRight_2] = -127;
+	}
+	}
+}
 task usercontrol()
 {
 	// User control code here, inside the loop
@@ -462,6 +479,7 @@ task usercontrol()
 	{
 		//startTask(liftControl);
 		//startTask(clawControl);
+    startTask(forwardMovement);
 		startTask(flywheelCtrl);
 		startTask(frontControl);
 	}
