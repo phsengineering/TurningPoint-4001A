@@ -58,6 +58,25 @@ task turn90() {
 	move(0);
 	wait(.75);
 }
+task turnother90() {
+	while((SensorValue[in8]) > -900)
+	{
+		//...continue turning
+		motor[DriveRight_1] = 60;
+		motor[DriveRight_2] = 60;
+		motor[DriveLeft_1] = -60;
+		motor[DriveLeft_2] = -60;
+	}
+
+	//Brief brake to stop some drift
+	motor[DriveRight_1] = -60;
+	motor[DriveRight_2] = -60;
+	motor[DriveLeft_1] = 60;
+	motor[DriveLeft_2] = 60;
+	wait1Msec(139);
+	move(0);
+	wait(.75);
+}
 const short leftButton = 1;
 const short centerButton = 2;
 const short rightButton = 4;
@@ -157,91 +176,6 @@ void pre_auton()
 				count = 0;
 			}
 			break;
-
-		//case 4:
-		//	//Display first choice
-		//	displayLCDCenteredString(0, "BlueCF");
-		//	displayLCDCenteredString(1, "<         Enter        >");
-		//	waitForPress();
-		//	//Increment or decrement "count" based on button press
-		//	if(nLCDButtons == leftButton)
-		//	{
-		//		waitForRelease();
-		//		count = 3;
-		//	}
-		//	else if(nLCDButtons == rightButton)
-		//	{
-		//		waitForRelease();
-		//		count++;
-		//	}
-		//	break;
-		//case 5:
-		//	//Display second choice
-		//	displayLCDCenteredString(0, "BlueCFP");
-		//	displayLCDCenteredString(1, "<         Enter        >");
-		//	waitForPress();
-		//	//Increment or decrement "count" based on button press
-		//	if(nLCDButtons == leftButton)
-		//	{
-		//		waitForRelease();
-		//		count--;
-		//	}
-		//	else if(nLCDButtons == rightButton)
-		//	{
-		//		waitForRelease();
-		//		count++;
-		//	}
-		//	break;
-		//case 6:
-		//	//Display third choice
-		//	displayLCDCenteredString(0, "BlueBCFP");
-		//	displayLCDCenteredString(1, "<         Enter        >");
-		//	waitForPress();
-		//	//Increment or decrement "count" based on button press
-		//	if(nLCDButtons == leftButton)
-		//	{
-		//		waitForRelease();
-		//		count--;
-		//	}
-		//	else if(nLCDButtons == rightButton)
-		//	{
-		//		waitForRelease();
-		//		count++;
-		//	}
-		//	break;
-		//case 7:
-		//	//Display fourth choice
-		//	displayLCDCenteredString(0, "BlueBCF");
-		//	displayLCDCenteredString(1, "<         Enter        >");
-		//	waitForPress();
-		//	//Increment or decrement "count" based on button press
-		//	if(nLCDButtons == leftButton)
-		//	{
-		//		waitForRelease();
-		//		count--;
-		//	}
-		//	else if(nLCDButtons == rightButton)
-		//	{
-		//		waitForRelease();
-		//		count = 0;
-		//	}
-		//case 8:
-		//	//Display fourth choice
-		//	displayLCDCenteredString(0, "ProgramSkills");
-		//	displayLCDCenteredString(1, "<         Enter        >");
-		//	waitForPress();
-		//	//Increment or decrement "count" based on button press
-		//	if(nLCDButtons == leftButton)
-		//	{
-		//		waitForRelease();
-		//		count--;
-		//	}
-		//	else if(nLCDButtons == rightButton)
-		//	{
-		//		waitForRelease();
-		//		count = 0;
-		//	}
-		//	break;
 		default:
 			count = 0;
 			break;
@@ -266,7 +200,7 @@ task autonomous() {
 	//Switch Case that actually runs the user choice
 
 	{
-		
+
 		switch(count){
 		case 0:
 			//If count = 0, run the code correspoinding with choice 1
@@ -284,7 +218,7 @@ task autonomous() {
 			wait(.15);
 			move(0);
 			motor[frontRoller] = 127;
-			wait(.75);
+			wait(.25);
 			SensorValue[leftQuad] = 0;
 			while(SensorValue[leftQuad] > -1055)
 			{
@@ -301,7 +235,8 @@ task autonomous() {
 			wait(1);
 
 			SensorValue[leftQuad] = 0;
-			while(SensorValue[leftQuad] < 150) {
+			while(SensorValue[leftQuad] < 145)
+				{
 				move(60);
 			}
 			move(0);
@@ -311,19 +246,19 @@ task autonomous() {
 			motor[indexer] = 0;
 
 			SensorValue[leftQuad] = 0;
-			while(SensorValue[leftQuad] < 320) {   //middle flag
+			while(SensorValue[leftQuad] < 325) {   //middle flag
 				move(60);
 			}
 			move(0);
+			motor[indexer] = 127;
 			wait(.75);
 			motor[frontRoller] = 127;
-			motor[indexer] = 127;
-			wait(3);
+			wait(0.9);
 			motor[frontRoller] = 0;
 			motor[indexer] = 0;
 			move(0);
 			SensorValue[leftQuad] = 0;
-			while(SensorValue[leftQuad] > -1600) {
+			while(SensorValue[leftQuad] > -1555) {
 				move(-127);
 			}
 			move(0);
@@ -331,7 +266,7 @@ task autonomous() {
 			move(127);
 			wait(.15);
 			move(0);
-			wait(1);
+			wait(.25);
 			SensorValue[leftQuad] = 0;
 			SensorValue[gyro] = 0;
 			while((SensorValue[in8]) > -900)
@@ -354,7 +289,7 @@ task autonomous() {
 			move(-127);
 			wait(0.75);
 			move(127);
-			wait(1.5);
+			wait(2);
 			move(0);
 			//Put in code here directly without braces
 			break;
@@ -362,18 +297,268 @@ task autonomous() {
 			//If count = 1, run the code correspoinding with choice 2
 			displayLCDCenteredString(0, "Red back");
 			displayLCDCenteredString(1, "is running!");
+						SensorValue[leftQuad] = 0;
+			motor[flywheel] = -127;
+			while(SensorValue[leftQuad] < 1100) {
+				move(100);
+				motor[frontRoller] = 127;
+			}
+			move(0);
+			wait(.1);
+			move(-127);
+			wait(.15);
+			move(0);
+			motor[frontRoller] = 127;
+			wait(.25);
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] > -1055)
+			{
+				move(-63);
+			}
+			motor[flywheel] = -127;
+			move(100);
+			wait(.1);
+			move(0);
+			wait(.15);
+			SensorValue[leftQuad]=0;
+			SensorValue[gyro] = 0;
+			while((SensorValue[in8]) < 900)
+	{
+		//...continue turning
+		motor[DriveRight_1] = -60;
+		motor[DriveRight_2] = -60;
+		motor[DriveLeft_1] = 60;
+		motor[DriveLeft_2] = 60;
+	}
+
+	//Brief brake to stop some drift
+	motor[DriveRight_1] = 50;
+	motor[DriveRight_2] = 50;
+	motor[DriveLeft_1] = -50;
+	motor[DriveLeft_2] = -50;
+	wait1Msec(120);
+	move(0);
+			wait(1);
+
+			SensorValue[leftQuad] = 0;
+
+			while(SensorValue[leftQuad] < 795) {
+				move(60);
+			}
+			move(-60);
+			wait(.25);
+			move(0);
+			motor[frontRoller] = 127;
+			motor[indexer] = 127;
+			wait(3);
+			motor[frontRoller] = 0;
+			motor[indexer] = 0;
+						SensorValue[leftQuad] = 0;
+			SensorValue[gyro] = 0;
+			while((SensorValue[in8]) > -900)
+			{
+				//...continue turning
+				motor[DriveRight_1] = 60;
+				motor[DriveRight_2] = 60;
+				motor[DriveLeft_1] = -60;
+				motor[DriveLeft_2] = -60;
+			}
+
+			//Brief brake to stop some drift
+			motor[DriveRight_1] = -60;
+			motor[DriveRight_2] = -60;
+			motor[DriveLeft_1] = 60;
+			motor[DriveLeft_2] = 60;
+			wait1Msec(134);
+			move(0);
+			wait(.5);
+			move(-127);
+			wait(.5);
+			move(0);
+			wait(.1);
+			move(127);
+			wait(2);
+			move(0);
+			motor[flywheel] = 0;
 			break;
 		case 2:
 			//If count = 2, run the code correspoinding with choice 3
 			displayLCDCenteredString(0, "Blue front");
 			displayLCDCenteredString(1, "is running!");
+			SensorValue[leftQuad] = 0;
+			motor[flywheel] = -127;
+			while(SensorValue[leftQuad] < 1100) {
+				move(100);
+				motor[frontRoller] = 127;
+			}
+			move(0);
+			wait(.1);
+			move(-127);
+			wait(.15);
+			move(0);
+			motor[frontRoller] = 127;
+			wait(.25);
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] > -1055)
+			{
+				move(-63);
+			}
+			motor[flywheel] = -127;
+			move(100);
+			wait(.1);
+			move(0);
+			wait(.15);
+			SensorValue[leftQuad]=0;
+			SensorValue[gyro] = 0;
+			startTask(turnother90);
+			wait(1);
+
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] < 145)
+				{
+				move(60);
+			}
+			move(0);
+			wait(.75);
+			motor[indexer] = 127;
+			wait(1);
+			motor[indexer] = 0;
+
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] < 325) {   //middle flag
+				move(60);
+			}
+			move(0);
+			motor[indexer] = 127;
+			wait(.75);
+			motor[frontRoller] = 127;
+			wait(0.9);
+			motor[frontRoller] = 0;
+			motor[indexer] = 0;
+			move(0);
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] > -1555) {
+				move(-127);
+			}
+			move(0);
+			wait(.2);
+			move(127);
+			wait(.15);
+			move(0);
+			wait(.25);
+			SensorValue[leftQuad] = 0;
+			SensorValue[gyro] = 0;
+			while((SensorValue[in8])< 900)
+			{
+				//...continue turning
+				motor[DriveRight_1] = -60;
+				motor[DriveRight_2] = -60;
+				motor[DriveLeft_1] = 60;
+				motor[DriveLeft_2] = 60;
+			}
+
+			//Brief brake to stop some drift
+			motor[DriveRight_1] = 60;
+			motor[DriveRight_2] = 60;
+			motor[DriveLeft_1] = -60;
+			motor[DriveLeft_2] = -60;
+			wait1Msec(139);
+			move(0);
+
+			move(-127);
+			wait(0.75);
+			move(127);
+			wait(2);
+			move(0);
 			//Put in code here directly without braces
 			break;
 		case 3:
 			//If count = 3, run the code correspoinding with choice 4
 			displayLCDCenteredString(0, "Blue back");
 			displayLCDCenteredString(1, "is running!");
-			//Put in code here directly without braces
+			SensorValue[leftQuad] = 0;
+			motor[flywheel] = -127;
+			while(SensorValue[leftQuad] < 1100) {
+				move(100);
+				motor[frontRoller] = 127;
+			}
+			move(0);
+			wait(.1);
+			move(-127);
+			wait(.15);
+			move(0);
+			motor[frontRoller] = 127;
+			wait(.25);
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] > -1055)
+			{
+				move(-63);
+			}
+			motor[flywheel] = -127;
+			move(100);
+			wait(.1);
+			move(0);
+			wait(.15);
+			SensorValue[leftQuad]=0;
+			SensorValue[gyro] = 0;
+			while((SensorValue[in8]) > -900)
+	{
+		//...continue turning
+		motor[DriveRight_1] = 60;
+		motor[DriveRight_2] = 60;
+		motor[DriveLeft_1] = -60;
+		motor[DriveLeft_2] = -60;
+	}
+
+	//Brief brake to stop some drift
+	motor[DriveRight_1] = -50;
+	motor[DriveRight_2] = -50;
+	motor[DriveLeft_1] = 50;
+	motor[DriveLeft_2] = 50;
+	wait1Msec(120);
+	move(0);
+			wait(1);
+
+			SensorValue[leftQuad] = 0;
+
+			while(SensorValue[leftQuad] < 795) {
+				move(60);
+			}
+			move(-60);
+			wait(.25);
+			move(0);
+			motor[frontRoller] = 127;
+			motor[indexer] = 127;
+			wait(3);
+			motor[frontRoller] = 0;
+			motor[indexer] = 0;
+						SensorValue[leftQuad] = 0;
+			SensorValue[gyro] = 0;
+			while((SensorValue[in8])< 900)
+			{
+				//...continue turning
+				motor[DriveRight_1] = -60;
+				motor[DriveRight_2] = -60;
+				motor[DriveLeft_1] = 60;
+				motor[DriveLeft_2] = 60;
+			}
+
+			//Brief brake to stop some drift
+			motor[DriveRight_1] = 60;
+			motor[DriveRight_2] = 60;
+			motor[DriveLeft_1] = -60;
+			motor[DriveLeft_2] = -60;
+			wait1Msec(134);
+			move(0);
+			wait(.5);
+			move(-127);
+			wait(.5);
+			move(0);
+			wait(.1);
+			move(127);
+			wait(2);
+			move(0);
+			motor[flywheel] = 0;
 			break;
 		//case 4:
 		//	//If count = 0, run the code correspoinding with choice 1
