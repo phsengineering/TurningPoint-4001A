@@ -33,13 +33,13 @@ static int count = 0;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-void move(int uniformSpeed) {
-	motor[DriveLeft_1] = uniformSpeed;
-	motor[DriveLeft_2] = uniformSpeed;
+void move(int uniformSpeed) { //controls all of the drivetrain during autonomous
+	motor[DriveLeft_1] = uniformSpeed; //using this allows us to reduce four lines of code to one, and it
+	motor[DriveLeft_2] = uniformSpeed; //makes it far easier to debug
 	motor[DriveRight_1] = uniformSpeed;
 	motor[DriveRight_2] = uniformSpeed;
 }
-task turn90() {
+task turn90() { //90 deg turns using gyro sensor, optimized for red side
 	while((SensorValue[in8]) < 900)
 	{
 		//...continue turning
@@ -58,7 +58,7 @@ task turn90() {
 	move(0);
 	wait(.75);
 }
-task turnother90() {
+task turnother90() { //90 deg turns using gyro sensor for blue side
 	while((SensorValue[in8]) > -900)
 	{
 		//...continue turning
@@ -77,7 +77,7 @@ task turnother90() {
 	move(0);
 	wait(.75);
 }
-const short leftButton = 1;
+const short leftButton = 1; //control code for Vex LCD screen
 const short centerButton = 2;
 const short rightButton = 4;
 
@@ -183,65 +183,55 @@ void pre_auton()
 	}
 }
 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              Autonomous Task                              */
-/*                                                                           */
-/*  This task is used to control your robot during the autonomous phase of   */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
-
-
+// Start of autonomous
 task autonomous() {
-	clearLCDLine(0);
+	clearLCDLine(0); //Wipe screen
 	clearLCDLine(1);
 	//Switch Case that actually runs the user choice
 
 	{
 
-		switch(count){
-		case 0:
+		switch(count){ //Switch case statement controls our autonomous based on integer values received
+		case 0: //from the LCD screen buttons
 			//If count = 0, run the code correspoinding with choice 1
 			displayLCDCenteredString(0, "Red front");
 			displayLCDCenteredString(1, "is running!");
 			SensorValue[leftQuad] = 0;
 			motor[flywheel] = -127;
-			while(SensorValue[leftQuad] < 1100) {
+			while(SensorValue[leftQuad] < 1100) { //move forward to get first cap
 				move(100);
 				motor[frontRoller] = 127;
 			}
 			move(0);
-			wait(.1);
+			wait(.1); //brief programming brake to avoid drift
 			move(-127);
 			wait(.15);
 			move(0);
-			motor[frontRoller] = 127;
+			motor[frontRoller] = 127; //run the roller in order to take in the ball under cap
 			wait(.25);
 			SensorValue[leftQuad] = 0;
-			while(SensorValue[leftQuad] > -1055)
+			while(SensorValue[leftQuad] > -1055) //move backwards
 			{
 				move(-63);
 			}
-			motor[flywheel] = -127;
+			motor[flywheel] = -127; //turn on the flywheel
 			move(100);
 			wait(.1);
 			move(0);
 			wait(.15);
 			SensorValue[leftQuad]=0;
 			SensorValue[gyro] = 0;
-			startTask(turn90);
+			startTask(turn90); //turn 90 deg to face the high flag
 			wait(1);
 
 			SensorValue[leftQuad] = 0;
-			while(SensorValue[leftQuad] < 145)
+			while(SensorValue[leftQuad] < 145) //move forward to reduce kinematic range and hit the high flag
 				{
 				move(60);
 			}
 			move(0);
 			wait(.75);
-			motor[indexer] = 127;
+			motor[indexer] = 127; //draw up second ball into flywheel
 			wait(1);
 			motor[indexer] = 0;
 
@@ -254,14 +244,14 @@ task autonomous() {
 			wait(.75);
 			motor[frontRoller] = 127;
 			wait(0.9);
-			motor[frontRoller] = 0;
+			motor[frontRoller] = 0; //turn off the roller and indexer motors
 			motor[indexer] = 0;
 			move(0);
 			SensorValue[leftQuad] = 0;
-			while(SensorValue[leftQuad] > -1555) {
+			while(SensorValue[leftQuad] > -1555) { //move backwards in order to face the platform
 				move(-127);
 			}
-			move(0);
+			move(0); //another brief programming brake here
 			wait(.2);
 			move(127);
 			wait(.15);
@@ -269,7 +259,7 @@ task autonomous() {
 			wait(.25);
 			SensorValue[leftQuad] = 0;
 			SensorValue[gyro] = 0;
-			while((SensorValue[in8]) > -900)
+			while((SensorValue[in8]) > -900) //turn another 90 deg in order to bring into alignment w/ platform
 			{
 				//...continue turning
 				motor[DriveRight_1] = 60;
@@ -291,38 +281,37 @@ task autonomous() {
 			move(127);
 			wait(2);
 			move(0);
-			//Put in code here directly without braces
 			break;
 		case 1:
 			//If count = 1, run the code correspoinding with choice 2
 			displayLCDCenteredString(0, "Red back");
 			displayLCDCenteredString(1, "is running!");
-						SensorValue[leftQuad] = 0;
+			SensorValue[leftQuad] = 0;
 			motor[flywheel] = -127;
-			while(SensorValue[leftQuad] < 1100) {
+			while(SensorValue[leftQuad] < 1100) { //move forward and capture ball under cap, score cap as well
 				move(100);
 				motor[frontRoller] = 127;
 			}
 			move(0);
-			wait(.1);
+			wait(.1); //prog brake
 			move(-127);
 			wait(.15);
 			move(0);
 			motor[frontRoller] = 127;
 			wait(.25);
 			SensorValue[leftQuad] = 0;
-			while(SensorValue[leftQuad] > -1055)
+			while(SensorValue[leftQuad] > -1055) //move backwards to starting position
 			{
 				move(-63);
 			}
-			motor[flywheel] = -127;
-			move(100);
+			motor[flywheel] = -127; //turn on flywheel
+			move(100); //prog brake
 			wait(.1);
 			move(0);
 			wait(.15);
 			SensorValue[leftQuad]=0;
 			SensorValue[gyro] = 0;
-			while((SensorValue[in8]) < 900)
+			while((SensorValue[in8]) < 900) //turn 90 deg to face the flag
 	{
 		//...continue turning
 		motor[DriveRight_1] = -60;
@@ -332,30 +321,30 @@ task autonomous() {
 	}
 
 	//Brief brake to stop some drift
-	motor[DriveRight_1] = 50;
-	motor[DriveRight_2] = 50;
-	motor[DriveLeft_1] = -50;
-	motor[DriveLeft_2] = -50;
-	wait1Msec(120);
-	move(0);
+			motor[DriveRight_1] = 50;
+			motor[DriveRight_2] = 50;
+			motor[DriveLeft_1] = -50;
+			motor[DriveLeft_2] = -50;
+			wait1Msec(120);
+			move(0);
 			wait(1);
 
 			SensorValue[leftQuad] = 0;
 
-			while(SensorValue[leftQuad] < 795) {
+			while(SensorValue[leftQuad] < 795) { //move forward a bit, reduce kinematic range
 				move(60);
 			}
 			move(-60);
 			wait(.25);
 			move(0);
-			motor[frontRoller] = 127;
+			motor[frontRoller] = 127; //draw up preload and captured ball
 			motor[indexer] = 127;
 			wait(3);
 			motor[frontRoller] = 0;
 			motor[indexer] = 0;
-						SensorValue[leftQuad] = 0;
+			SensorValue[leftQuad] = 0;
 			SensorValue[gyro] = 0;
-			while((SensorValue[in8]) > -900)
+			while((SensorValue[in8]) > -900) //turn back to face the platform
 			{
 				//...continue turning
 				motor[DriveRight_1] = 60;
@@ -371,19 +360,19 @@ task autonomous() {
 			motor[DriveLeft_2] = 60;
 			wait1Msec(134);
 			move(0);
-			wait(.5);
+			wait(.5); //prog brake
 			move(-127);
 			wait(.5);
 			move(0);
 			wait(.1);
-			move(127);
+			move(127); //move at full speed towards platform
 			wait(2);
 			move(0);
 			motor[flywheel] = 0;
 			break;
 		case 2:
 			//If count = 2, run the code correspoinding with choice 3
-			displayLCDCenteredString(0, "Blue front");
+			displayLCDCenteredString(0, "Blue front"); //essentially the same as red, but with turns reversed
 			displayLCDCenteredString(1, "is running!");
 			SensorValue[leftQuad] = 0;
 			motor[flywheel] = -127;
@@ -474,7 +463,7 @@ task autonomous() {
 			break;
 		case 3:
 			//If count = 3, run the code correspoinding with choice 4
-			displayLCDCenteredString(0, "Blue back");
+			displayLCDCenteredString(0, "Blue back"); //same as red back, but with turns reversed
 			displayLCDCenteredString(1, "is running!");
 			SensorValue[leftQuad] = 0;
 			motor[flywheel] = -127;
@@ -560,38 +549,8 @@ task autonomous() {
 			move(0);
 			motor[flywheel] = 0;
 			break;
-		//case 4:
-		//	//If count = 0, run the code correspoinding with choice 1
-		//	displayLCDCenteredString(0, "BlueCF");
-		//	displayLCDCenteredString(1, "is running!");
-		//	//Put in code here directly without braces
-		//	break;
-		//case 5:
-		//	//If count = 1, run the code correspoinding with choice 2
-		//	displayLCDCenteredString(0, "BlueCFP");
-		//	displayLCDCenteredString(1, "is running!");
-		//	//Put in code here directly without braces
-		//	break;
-		//case 6:
-		//	//If count = 2, run the code correspoinding with choice 3
-		//	displayLCDCenteredString(0, "BlueBCFP");
-		//	displayLCDCenteredString(1, "is running!");
-		//	//Put in code here directly without braces
-		//	break;
-		//case 7:
-		//	//If count = 3, run the code correspoinding with choice 4
-		//	displayLCDCenteredString(0, "BlueBCF");
-		//	displayLCDCenteredString(1, "is running!");
-		//	//Put in code here directly without braces
-		//	break;
-		//case 8:
-		//	//If count = 3, run the code correspoinding with choice 4
-		//	displayLCDCenteredString(0, "ProgramSkills");
-		//	displayLCDCenteredString(1, "is running!");
-		//	//Put in code here directly without braces
-		//	break;
 		default:
-			displayLCDCenteredString(0, "No Auton");
+			displayLCDCenteredString(0, "No Auton"); //default selection on cortex boot
 			displayLCDCenteredString(1, "Selected");
 			break;
 		}
@@ -736,16 +695,6 @@ task ArcadeDrive()
 		wait1Msec( 25 );
 	}
 }
-//task clawControl() {
-//	while(true) {
-//		if(vexRT[Btn8D] == 1) {
-//			motor[clawMotor] = 100;
-//		}
-//		if(vexRT[Btn8U] == 1) {
-//			motor[clawMotor] = -100;
-//		}
-//	}
-//}
 task descorerControl() {
 	while(true) {
 		if(SensorValue[descorerLimit] == 0) {
@@ -789,33 +738,14 @@ task flywheelCtrl() {
 		}
 	}
 }
-
-//task liftControl() {
-//	while(true) {
-//		motor[liftMotors] = vexRT[Ch2];
-//	}
-//}
-
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              User Control Task                            */
-/*                                                                           */
-/*  This task is used to control your robot during the user control phase of */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
-
+//user control that is run during competition period
 task usercontrol()
 {
-	// User control code here, inside the loop
 	startTask(MotorSlewRateTask);
 	startTask(ArcadeDrive);
 	while (true)
 	{
-		//startTask(liftControl);
-		//startTask(clawControl);
-		startTask(flywheelCtrl);
+		startTask(flywheelCtrl); //start the control subroutines for each system
 		startTask(frontControl);
 		startTask(PlatformDrive);
 		startTask(descorerControl);
