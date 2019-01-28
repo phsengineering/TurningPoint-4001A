@@ -218,7 +218,7 @@ task autonomous() {
 			wait(.15);
 			move(0);
 			motor[frontRoller] = 127;
-			wait(.25);
+			wait(.15);
 			SensorValue[leftQuad] = 0;
 			while(SensorValue[leftQuad] > -1055)
 			{
@@ -501,7 +501,7 @@ task autonomous() {
 			wait(.15);
 			SensorValue[leftQuad]=0;
 			SensorValue[gyro] = 0;
-			while((SensorValue[in8]) > -900)
+			while((SensorValue[in8]) > -920)
 	{
 		//...continue turning
 		motor[DriveRight_1] = 60;
@@ -521,18 +521,25 @@ task autonomous() {
 
 			SensorValue[leftQuad] = 0;
 
-			while(SensorValue[leftQuad] < 810) {
+			while(SensorValue[leftQuad] < 740) {
 				move(60);
 			}
 			move(-60);
-			wait(.25);
+			wait(.2);
 			move(0);
-			motor[frontRoller] = 127;
+			//motor[frontRoller] = 127;
 			motor[indexer] = 127;
 			wait(3);
-			motor[frontRoller] = 0;
+			//motor[flywheel] = -100;
+			//wait(1.5);
+			//motor[frontRoller] = 127;
+			//wait(2.5);
+			//motor[frontRoller] = 0;
 			motor[indexer] = 0;
-						SensorValue[leftQuad] = 0;
+			motor[frontRoller] = 0;
+			motor[flywheel] = 0;
+			motor[indexer] = 0;
+			SensorValue[leftQuad] = 0;
 			SensorValue[gyro] = 0;
 			while((SensorValue[in8])< 900)
 			{
@@ -551,14 +558,20 @@ task autonomous() {
 			wait1Msec(128);
 			move(0);
 			wait(.5);
-			move(-127);
-			wait(.5);
+			SensorValue[leftQuad] = 0;
+			SensorValue[gyro] = 0;
+			while(SensorValue[leftQuad] < 900) {
+				move(127);
+			}
 			move(0);
-			wait(.1);
-			move(127);
-			wait(2);
-			move(0);
-			motor[flywheel] = 0;
+			//move(-127);
+			//wait(.5);
+			//move(0);
+			//wait(.1);
+			//move(127);
+			//wait(2);
+			//move(0);
+			//motor[flywheel] = 0;
 			break;
 		//case 4:
 		//	//If count = 0, run the code correspoinding with choice 1
