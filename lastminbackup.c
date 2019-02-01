@@ -1,4 +1,4 @@
-#pragma config(I2C_Usage, I2C1, i2cSensors) //REMINDER: RED FRONT IS SET TO PROGRAMMING SKILLS MODE.
+#pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, in8,    gyro,           sensorGyro)
 #pragma config(Sensor, dgtl3,  descorerLimit,  sensorTouch)
 #pragma config(Sensor, I2C_1,  rightQuad,      sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -11,6 +11,9 @@
 #pragma config(Motor,  port7,           frontRoller,   tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port8,           descorer,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port9,           flywheel,      tmotorVex393_MC29, openLoop)
+#pragma config(Sensor, in1,    xAxis,               sensorAccelerometer)
+#pragma config(Sensor, in2,    yAxis,               sensorAccelerometer)
+#pragma config(Sensor, in3,    zAxis,               sensorAccelerometer)
 
 #pragma competitionControl(Competition)
 #pragma autonomousDuration(20)
@@ -18,14 +21,31 @@
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify
 #pragma platform(VEX2)
 static int count = 0;
+float accelRatio = 0;
+float yPos = 0;
+float yVel = 0;
+float yAccel = 0;
+float posAt1MSec = 0;
+float errorFactor = 1.1667;
 
+int zYDif = 0;
+int originalY = 0;
 void move(int uniformSpeed) {
     motor[DriveLeft_1] = uniformSpeed;
     motor[DriveLeft_2] = uniformSpeed;
     motor[DriveRight_1] = uniformSpeed;
     motor[DriveRight_2] = uniformSpeed;
 }
-void turnHandler(String operator, int gyroLimit, int rightSpeed, int leftSpeed, int brakeRight, int brakeLeft, int brakeTime) {
+task yPosition(){
+  while(true){
+    wait1Msec(1);//1 millisecond sampling time
+    yAccel = (abs(SensorValue[yAxis] - originalY)) > 2 ? (SensorValue[yAxis] - originalY) / accelRatio : 0;
+    //check if threshold is passed and set "instantanious" acceleration   
+    yVel += (yAccel / 1000);//update "instantainious" velocity
+    yPos += (yVel / 1000);//update position
+  }
+}
+void turnHandler(const string operator, int gyroLimit, int rightSpeed, int leftSpeed, int brakeRight, int brakeLeft, int brakeTime) {
     if(strcmp(operator, ">") == 0) {
         while((SensorValue[in8]) > gyroLimit)
         {
@@ -237,7 +257,7 @@ task autonomous() {
             move(-127);
             wait(0.75);
             move(127);
-            wait(2.25);
+            wait(2);
             move(0);
             break;
         case 1:
@@ -609,9 +629,23 @@ task flywheelCtrl() {
         }
     }
 }
-
+task PlatformDrive() {
+    while(true) {
+    if(vexRT[Btn8U] == 1) {
+        move(127);
+    }
+    if(vexRT[Btn8D] == 1) {
+        move(-127);
+    }
+    }
+}
 task usercontrol()
 {
+    originalY = SensorValue[yAxis];//record the y axis value at start
+    zYDif = SensorValue[zAxis] - originalY;//find the difference between 0G and 1G
+    accelRatio = zYDif / 9.801;//find sensor value of 1m/s^2
+    StartTask(yPosition);//start calculating position
+    posAt1MSec = yPos * errorFactor;//record yPos at 1 millisecond, and account for error
     startTask(MotorSlewRateTask);
     startTask(ArcadeDrive);
     while (true)
