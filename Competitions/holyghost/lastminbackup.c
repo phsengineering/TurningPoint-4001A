@@ -95,12 +95,9 @@ void waitForRelease()
 	while(nLCDButtons != 0){}
 	wait1Msec(5);
 }
-void pre_auton()
-{
-	//Declare count variable to keep track of our choice
-
-	//------------- Beginning of User Interface Code ---------------
-	//Clear LCD
+task autonChooser() {
+	if(bIfiRobotDisabled == true)
+	{
 	clearLCDLine(0);
 	clearLCDLine(1);
 	//Loop while center button is not pressed
@@ -199,6 +196,111 @@ void pre_auton()
 		}
 	}
 }
+}
+void pre_auton()
+{
+	startTask(autonChooser);
+// 	if(bIfiRobotDisabled == true)
+// 	{
+// 	clearLCDLine(0);
+// 	clearLCDLine(1);
+// 	//Loop while center button is not pressed
+// 	while(nLCDButtons != centerButton)
+// 	{
+// 		//Switch case that allows the user to choose from 4 different options
+// 		switch(count){
+// 		case 0:
+// 			//Display first choice
+// 			displayLCDCenteredString(0, "Red front");
+// 			displayLCDCenteredString(1, "<         Enter        >");
+// 			waitForPress();
+// 			//Increment or decrement "count" based on button press
+// 			if(nLCDButtons == leftButton)
+// 			{
+// 				waitForRelease();
+// 				count = 3;
+// 			}
+// 			else if(nLCDButtons == rightButton)
+// 			{
+// 				waitForRelease();
+// 				count++;
+// 			}
+// 			break;
+// 		case 1:
+// 			//Display second choice
+// 			displayLCDCenteredString(0, "Red back");
+// 			displayLCDCenteredString(1, "<         Enter        >");
+// 			waitForPress();
+// 			//Increment or decrement "count" based on button press
+// 			if(nLCDButtons == leftButton)
+// 			{
+// 				waitForRelease();
+// 				count--;
+// 			}
+// 			else if(nLCDButtons == rightButton)
+// 			{
+// 				waitForRelease();
+// 				count++;
+// 			}
+// 			break;
+// 		case 2:
+// 			//Display third choice
+// 			displayLCDCenteredString(0, "Blue Front");
+// 			displayLCDCenteredString(1, "<         Enter        >");
+// 			waitForPress();
+// 			//Increment or decrement "count" based on button press
+// 			if(nLCDButtons == leftButton)
+// 			{
+// 				waitForRelease();
+// 				count--;
+// 			}
+// 			else if(nLCDButtons == rightButton)
+// 			{
+// 				waitForRelease();
+// 				count++;
+// 			}
+// 			break;
+// 		case 3:
+// 			//Display fourth choice
+// 			displayLCDCenteredString(0, "Blue back");
+// 			displayLCDCenteredString(1, "<         Enter        >");
+// 			waitForPress();
+// 			//Increment or decrement "count" based on button press
+// 			if(nLCDButtons == leftButton)
+// 			{
+// 				waitForRelease();
+// 				count--;
+// 			}
+// 			else if(nLCDButtons == rightButton)
+// 			{
+// 				waitForRelease();
+// 				count++;
+// 			}
+// 			break;
+// 		case 4:
+// 			//Display fourth choice
+// 			displayLCDCenteredString(0, "Programming skills");
+// 			displayLCDCenteredString(1, "<         Enter        >");
+// 			waitForPress();
+// 			//Increment or decrement "count" based on button press
+// 			if(nLCDButtons == leftButton)
+// 			{
+// 				waitForRelease();
+// 				count--;
+// 			}
+// 			else if(nLCDButtons == rightButton)
+// 			{
+// 				waitForRelease();
+// 				count = 0;
+// 			}
+// 			break;
+// 		default:
+// 			count = 0;
+// 			break;
+// 		}
+// 	}
+// }
+}
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -212,6 +314,7 @@ void pre_auton()
 
 
 task autonomous() {
+	stopTask(autonChooser);
 	clearLCDLine(0);
 	clearLCDLine(1);
 	//Switch Case that actually runs the user choice
@@ -682,9 +785,9 @@ task autonomous() {
 			}
 			move(-127);
 			wait(.05);
-				
+
 			move(0);
-			
+
 			break;
 		//case 5:
 		//	//If count = 1, run the code correspoinding with choice 2
