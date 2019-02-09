@@ -452,6 +452,7 @@ clearLCDLine(1);
 		//If count = 1, run the code correspoinding with choice 2
 		displayLCDCenteredString(0, "Red back");
 		displayLCDCenteredString(1, "is running!");
+		wait(2.25);
 		SensorValue[leftQuad] = 0;
 		motor[flywheel] = -127;
 		while(SensorValue[leftQuad] < 1100) {
@@ -497,11 +498,11 @@ clearLCDLine(1);
 
 		SensorValue[leftQuad] = 0;
 
-		while(SensorValue[leftQuad] < 810) {
-			move(60);
+		while(SensorValue[leftQuad] < 750) {
+			move(50);
 		}
-		move(-60);
-		wait(.25);
+		move(-50);
+		wait(.1);
 		move(0);
 		motor[frontRoller] = 127;
 		motor[indexer] = 127;
@@ -631,6 +632,7 @@ clearLCDLine(1);
 		//If count = 3, run the code correspoinding with choice 4
 		displayLCDCenteredString(0, "Blue back");
 		displayLCDCenteredString(1, "is running!");
+		wait(2.25);
 		SensorValue[leftQuad] = 0;
 		motor[flywheel] = -127;
 		while(SensorValue[leftQuad] < 1100) {
@@ -676,11 +678,11 @@ clearLCDLine(1);
 
 		SensorValue[leftQuad] = 0;
 
-		while(SensorValue[leftQuad] < 740) {
-			move(60);
+		while(SensorValue[leftQuad] < 750) {
+			move(50);
 		}
-		move(-60);
-		wait(.2);
+		move(-50);
+		wait(.1);
 		move(0);
 		//motor[frontRoller] = 127;
 		motor[indexer] = 127;
@@ -921,25 +923,111 @@ clearLCDLine(1);
 		wait(0.5);
 		SensorValue[leftQuad]= 0;
 		while(SensorValue[leftQuad] < 700) {
-			move(60);
+			move(127);
 			motor(frontRoller) = -127;
+
 		}
+		move(-127);
+		wait(.025);
 		move(0);
-
-
 		break;
-		//case 5:
-		//	//If count = 1, run the code correspoinding with choice 2
-		//	displayLCDCenteredString(0, "BlueCFP");
-		//	displayLCDCenteredString(1, "is running!");
-		//	//Put in code here directly without braces
-		//	break;
-		//case 6:
-		//	//If count = 2, run the code correspoinding with choice 3
-		//	displayLCDCenteredString(0, "BlueBCFP");
-		//	displayLCDCenteredString(1, "is running!");
-		//	//Put in code here directly without braces
-		//	break;
+		case 6:
+			//If count = 2, run the code correspoinding with choice 3
+			displayLCDCenteredString(0, "BlueBCFP");
+			displayLCDCenteredString(1, "is running!");
+			SensorValue[leftQuad] = 0;
+			motor[flywheel] = -127;
+			while(SensorValue[leftQuad] < 1100) {
+				move(100);
+				motor[frontRoller] = 127;
+			}
+			move(0);
+			wait(.1);
+			move(-127);
+			wait(.15);
+			move(0);
+			motor[frontRoller] = 127;
+			wait(.25);
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] > -1055)
+			{
+				move(-63);
+			}
+			motor[flywheel] = -127;
+			move(100);
+			wait(.1);
+			move(0);
+			wait(.15);
+			SensorValue[leftQuad]=0;
+			SensorValue[gyro] = 0;
+			startTask(turnother90);
+			wait(1);
+
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] < 145)
+			{
+				move(60);
+			}
+			move(0);
+			wait(.75);
+			motor[indexer] = 127;
+			wait(1);
+			motor[indexer] = 0;
+
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] < 325) {   //middle flag
+				move(60);
+			}
+			move(0);
+			motor[indexer] = 127;
+			wait(.75);
+			motor[frontRoller] = 127;
+			wait(0.9);
+			motor[frontRoller] = 0;
+			motor[indexer] = 0;
+			move(0);
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] > -35) {
+				motor[DriveLeft_1] = -127;
+				motor[DriveLeft_1] = -127;
+				motor[DriveRight_1] = 127;
+				motor[DriveRight_1] = 127;
+			}
+			move(127);
+			wait(.8);
+			move(0);
+			SensorValue[leftQuad] = 0;
+			while(SensorValue[leftQuad] > -750) {
+				move(-80);
+			}
+			move(63);
+			wait(0.1);
+			move(0);
+			SensorValue[gyro] = 0;
+			while(SensorValue[gyro] < 900) {
+				motor[DriveRight_1] = -60;
+				motor[DriveRight_2] = -60;
+				motor[DriveLeft_1] = 60;
+				motor[DriveLeft_2] = 60;
+			}
+			motor[DriveRight_1] = 60;
+				motor[DriveRight_2] = 60;
+				motor[DriveLeft_1] = -60;
+				motor[DriveLeft_2] = -60;
+				wait1Msec(120);
+			move(0);
+			wait(0.5);
+			SensorValue[leftQuad]= 0;
+			while(SensorValue[leftQuad] < 700) {
+				move(127);
+				motor(frontRoller) = -127;
+
+			}
+			move(-127);
+			wait(.025);
+			move(0);
+			break;
+
 		//case 7:
 		//	//If count = 3, run the code correspoinding with choice 4
 		//	displayLCDCenteredString(0, "BlueBCF");
