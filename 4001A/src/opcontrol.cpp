@@ -1,5 +1,6 @@
 #include "main.h"
 #include "subsystems.hpp"
+#include <sstream>
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -17,7 +18,20 @@
 
 pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 pros::Controller partnerController = Controller(E_CONTROLLER_PARTNER);
+
 void opcontrol() {
+	/*
+	while(backLeft.get_position() < 1000) {
+		backLeft.move_voltage(12000);
+		backRight.move_voltage(12000);
+		frontRight.move_voltage(12000);
+		frontLeft.move_voltage(12000);
+	}
+	backLeft.move_voltage(0);
+	backRight.move_voltage(0);
+	frontRight.move_voltage(0);
+	frontLeft.move_voltage(0);
+	*/
 	while(true) {
 		//Drive
 		int y = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
@@ -40,7 +54,7 @@ void opcontrol() {
 		else
 		{
 			liftMotor.set_brake_mode(E_MOTOR_BRAKE_COAST);
-			setLift(mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y));	
+			setLift(mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y));
 		}
 
 		//Flywheel
@@ -52,7 +66,7 @@ void opcontrol() {
 		{
 			setFlywheel(0);
 		}
-		
+
 		//Intake
 		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
@@ -70,20 +84,43 @@ void opcontrol() {
 		//Indexer
 		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L1))
 		{
+			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
 			setIndexer(127);
 		}
 		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L2))
 		{
+			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
 			setIndexer(-127);
 		}
 		else
 		{
+			indexer.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 			setIndexer(0);
 		}
-		
-		
-		
 
+		std::ostringstream sstream;
+		sstream << backRight.get_position();
+		std::string brString = sstream.str();
+
+		sstream << frontLeft.get_position();
+		std::string flString = sstream.str();
+
+		sstream << frontRight.get_position();
+		std::string frString = sstream.str();
+
+		sstream << backLeft.get_position();
+		std::string blString = sstream.str();
+		if(mainController.get_digital(E_CONTROLLER_DIGITAL_Y)) {
+			frontLeft.tare_position();
+			backLeft.tare_position();
+			frontRight.tare_position();
+			backRight.tare_position();
+
+		}
+		pros::lcd::set_text(0, "Back Right "  + brString);
+		pros::lcd::set_text(1, "Back left " + blString);
+		pros::lcd::set_text(2, "Front Left " + flString);
+		pros::lcd::set_text(3, "Front Right " + frString);
 		pros::delay(20);
 	}
 }
