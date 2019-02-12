@@ -7,37 +7,20 @@
  */
 #pragma once
 
-#include "okapi/api/control/async/asyncPositionController.hpp"
+#include "okapi/api/control/async/asyncVelocityController.hpp"
 #include "okapi/api/device/motor/abstractMotor.hpp"
 #include "okapi/api/util/logging.hpp"
 #include "okapi/api/util/timeUtil.hpp"
+#include <memory>
 
 namespace okapi {
 /**
  * Closed-loop controller that uses the V5 motor's onboard control to move. Input units are whatever
  * units the motor is in.
  */
-class AsyncPosIntegratedController : public AsyncPositionController<double, double> {
+class AsyncVelIntegratedController : public AsyncVelocityController<double, double> {
   public:
-  /**
-   * Closed-loop controller that uses the V5 motor's onboard control to move. Input units are
-   * whatever units the motor is in. The maximum velocity for profiled movements will be the maximum
-   * velocity for the motor's gearset.
-   *
-   * @param imotor the motor to control
-   */
-  AsyncPosIntegratedController(const std::shared_ptr<AbstractMotor> &imotor,
-                               const TimeUtil &itimeUtil);
-
-  /**
-   * Closed-loop controller that uses the V5 motor's onboard control to move. Input units are
-   * whatever units the motor is in.
-   *
-   * @param imotor the motor to control
-   * @param imaxVelocity the maximum velocity during a profiled movement in RPM [0-600].
-   */
-  AsyncPosIntegratedController(const std::shared_ptr<AbstractMotor> &imotor,
-                               std::int32_t imaxVelocity,
+  AsyncVelIntegratedController(const std::shared_ptr<AbstractMotor> &imotor,
                                const TimeUtil &itimeUtil);
 
   /**
@@ -53,7 +36,7 @@ class AsyncPosIntegratedController : public AsyncPositionController<double, doub
   double getTarget() override;
 
   /**
-   * Returns the last error of the controller.
+   * Returns the last error of the controller. Does not update when disabled.
    */
   double getError() const override;
 
@@ -108,39 +91,15 @@ class AsyncPosIntegratedController : public AsyncPositionController<double, doub
    */
   void controllerSet(double ivalue) override;
 
-  /**
-   * Sets a new maximum velocity in RPM [0-600].
-   *
-   * @param imaxVelocity the new maximum velocity
-   */
-  virtual void setMaxVelocity(std::int32_t imaxVelocity);
-
-  /**
-   * Sets the "absolute" zero position of the motor to its current position.
-   *
-   * @return 1 if the operation was successful or PROS_ERR if the operation failed, setting errno.
-   */
-  virtual std::int32_t tarePosition();
-
-  /**
-   * Stops the motor mid-movement. Does not change the last set target.
-   */
-  virtual void stop();
-
   protected:
   Logger *logger;
   std::shared_ptr<AbstractMotor> motor;
-  std::int32_t maxVelocity{600}; // 600 RPM max, vexOS will limit if the gearset can't go this fast
   double lastTarget = 0;
   bool controllerIsDisabled = false;
   bool hasFirstTarget = false;
   std::unique_ptr<SettledUtil> settledUtil;
   std::unique_ptr<AbstractRate> rate;
 
-  /**
-   * Resumes moving after the controller is reset. Should not cause movement if the controller is
-   * turned off, reset, and turned back on.
-   */
   virtual void resumeMovement();
 };
 } // namespace okapi
