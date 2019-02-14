@@ -17,7 +17,13 @@ void drive(int y, int r)
     frontRight.move_voltage(y - r);
     backRight.move_voltage(y - r);
 }
-
+void autoDrive(int y) {
+  y *= 12000.0 / 127.0;
+  frontLeft.move_voltage(y);
+  frontRight.move_voltage(y);
+  backLeft.move_voltage(y);
+  backRight.move_voltage(y);
+}
 //Lift
 Motor liftMotor(8, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
 

@@ -68,23 +68,39 @@ void opcontrol() {
 		}
 
 		//Intake
+		/*
 		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
+
 			setIntake(64);
 		}
 		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_X))
 		{
+
 			setIntake(-127);
 		}
 		else
 		{
+
 			setIntake(0);
 		}
+*/
+		//Indexer and intake
+		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R2))
+		{
 
-		//Indexer
-		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L1))
+			setIntake(64);
+		}
+		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_X))
+		{
+
+			setIntake(-127);
+		}
+		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L1))
 		{
 			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
+
+			setIntake(74);
 			setIndexer(127);
 		}
 		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L2))
@@ -94,8 +110,10 @@ void opcontrol() {
 		}
 		else
 		{
+			//intake.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 			indexer.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 			setIndexer(0);
+			setIntake(0);
 		}
 
 		std::ostringstream sstream;

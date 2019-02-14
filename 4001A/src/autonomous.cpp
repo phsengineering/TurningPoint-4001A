@@ -21,12 +21,13 @@ void autonomous() {
         frontRight.move_voltage(12000);
         backLeft.move_voltage(12000);
         backRight.move_voltage(12000);
-    }
-    frontLeft.move_voltage(0);
-    frontRight.move_voltage(0);
-    backLeft.move_voltage(0);
-    backRight.move_voltage(0);
 
+    }
+    frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    backRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    frontRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    pros::Task::delay(1000);
 
 
 }
