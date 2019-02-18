@@ -56,17 +56,17 @@ void autonomous() {
 
 		setFlywheel(600);
 		while(frontLeft.get_position() < 1100) {
-      frontLeft.move_voltage(12000);
-      frontRight.move_voltage(12000);
-      backLeft.move_voltage(12000);
-      backRight.move_voltage(12000);
+      frontLeft.move_voltage(6000);
+      frontRight.move_voltage(6000);
+      backLeft.move_voltage(6000);
+      backRight.move_voltage(6000);
 			setIntake(64);
 		}
     frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     backRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     frontRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-		pros::Task::delay(100);
+		pros::Task::delay(1000);
 		setIntake(64);
 		pros::Task::delay(150);
     frontLeft.tare_position();
@@ -79,10 +79,10 @@ void autonomous() {
     frontRight.set_brake_mode(E_MOTOR_BRAKE_COAST);
 		while(frontLeft.get_position() > -1055)
 		{
-      frontLeft.move_voltage(-12000);
-      frontRight.move_voltage(-12000);
-      backLeft.move_voltage(-12000);
-      backRight.move_voltage(-12000);
+      frontLeft.move_voltage(-6000);
+      frontRight.move_voltage(-6000);
+      backLeft.move_voltage(-6000);
+      backRight.move_voltage(-6000);
 		}
 		setFlywheel(600);
 
@@ -100,10 +100,10 @@ void autonomous() {
     backRight.tare_position();
 		while(frontLeft.get_position() < 145)
 		{
-      frontLeft.move_voltage(6000);
-      frontRight.move_voltage(6000);
-      backLeft.move_voltage(6000);
-      backRight.move_voltage(6000);
+      frontLeft.move_voltage(3000);
+      frontRight.move_voltage(3000);
+      backLeft.move_voltage(3000);
+      backRight.move_voltage(3000);
 		}
     frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
@@ -122,10 +122,10 @@ void autonomous() {
     backRight.set_brake_mode(E_MOTOR_BRAKE_COAST);
     frontRight.set_brake_mode(E_MOTOR_BRAKE_COAST);
 		while(frontLeft.get_position() < 325) {
-      frontLeft.move_voltage(6000);
-      frontRight.move_voltage(6000);
-      backLeft.move_voltage(6000);
-      backRight.move_voltage(6000);
+      frontLeft.move_voltage(3000);
+      frontRight.move_voltage(3000);
+      backLeft.move_voltage(3000);
+      backRight.move_voltage(3000);
 		}
     frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
@@ -142,10 +142,10 @@ void autonomous() {
     frontRight.tare_position();
     backRight.tare_position();
 		while(frontLeft.get_position() > -1500) {
-      frontLeft.move_voltage(-12000);
-      frontRight.move_voltage(-12000);
-      backLeft.move_voltage(-12000);
-      backRight.move_voltage(-12000);
+      frontLeft.move_voltage(-6000);
+      frontRight.move_voltage(-6000);
+      backLeft.move_voltage(-6000);
+      backRight.move_voltage(-6000);
 		}
     frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
