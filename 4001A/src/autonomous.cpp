@@ -62,6 +62,11 @@ void autonomous() {
       backRight.move_voltage(6000);
 			setIntake(64);
 		}
+    frontLeft.move_voltage(0);
+    frontRight.move_voltage(0);
+    backLeft.move_voltage(0);
+    backRight.move_voltage(0);
+
     frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     backRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
@@ -77,6 +82,7 @@ void autonomous() {
     backLeft.set_brake_mode(E_MOTOR_BRAKE_COAST);
     backRight.set_brake_mode(E_MOTOR_BRAKE_COAST);
     frontRight.set_brake_mode(E_MOTOR_BRAKE_COAST);
+    /*
 		while(frontLeft.get_position() > -1055)
 		{
       frontLeft.move_voltage(-6000);
@@ -156,6 +162,6 @@ void autonomous() {
     frontRight.tare_position();
     backRight.tare_position();
     //PROGRAM THIS TURN AND THE FINAL PLATFORM MOUNT
-
+*/
 
 }
