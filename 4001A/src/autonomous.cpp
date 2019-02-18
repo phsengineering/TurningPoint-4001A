@@ -1,5 +1,6 @@
 #include "main.h"
 #include "subsystems.hpp"
+#include <sstream>
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -21,6 +22,22 @@ void autonomous() {
     backRight.tare_position();
     double forward = frontLeft.get_position() + frontRight.get_position();
     double backward = backLeft.get_position() + backLeft.get_position();
+    std::ostringstream sstream;
+		sstream << backRight.get_position();
+		std::string brString = sstream.str();
+
+		sstream << frontLeft.get_position();
+		std::string flString = sstream.str();
+
+		sstream << frontRight.get_position();
+		std::string frString = sstream.str();
+
+		sstream << backLeft.get_position();
+		std::string blString = sstream.str();
+    pros::lcd::set_text(0, "Back Right "  + brString);
+		pros::lcd::set_text(1, "Back left " + blString);
+		pros::lcd::set_text(2, "Front Left " + flString);
+		pros::lcd::set_text(3, "Front Right " + frString);
     /*
     double firstLimit = 1000.0;
     while(forward < firstLimit) {
@@ -104,7 +121,7 @@ void autonomous() {
     backLeft.set_brake_mode(E_MOTOR_BRAKE_COAST);
     backRight.set_brake_mode(E_MOTOR_BRAKE_COAST);
     frontRight.set_brake_mode(E_MOTOR_BRAKE_COAST);
-		while(frontLeft.get_position() < 325) { 
+		while(frontLeft.get_position() < 325) {
       frontLeft.move_voltage(6000);
       frontRight.move_voltage(6000);
       backLeft.move_voltage(6000);
