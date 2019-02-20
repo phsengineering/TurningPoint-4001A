@@ -18,7 +18,7 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Team number: 4001E");
+	pros::lcd::set_text(1, "We have 169A leaks");
 
 }
 

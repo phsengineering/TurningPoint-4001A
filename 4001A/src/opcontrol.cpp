@@ -38,9 +38,9 @@ void opcontrol() {
 		int r = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
 
 		//Make r half as sensitive if not going forward or backward
-		if(std::abs(y) < 16)
+		if(std::abs(y) < 10)
 		{
-			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.8), r);
+			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.7), r);
 		}
 
 		drive(y, r);
