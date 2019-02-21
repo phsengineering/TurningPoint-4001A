@@ -7,7 +7,7 @@ void autonomous() {
   setFlywheel(600);
   while(frontLeft.get_position() < 925) {
     if (frontLeft.get_position() < 150 && runningSpeed < 175) {   //acceleration
-      runningSpeed*=3;  //acceleration multiplier
+      pow(runningSpeed, 2);  //acceleration multiplier
       autoDrive(runningSpeed);
       pros::delay(150);
     }
@@ -16,7 +16,7 @@ void autonomous() {
       autoDrive(runningSpeed);
     }
     if(frontLeft.get_position() > 750) {  //deceleration
-      runningSpeed/=4;  //deceleration multiplier
+      sqrt(runningSpeed);  //deceleration multiplier
       autoDrive(runningSpeed);
       pros::delay(200);
     }

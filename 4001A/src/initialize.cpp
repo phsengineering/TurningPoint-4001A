@@ -18,7 +18,9 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "We have 169A leaks");
+	lv_obj_t* label = lv_label_create(lv_scr_act(), NULL);
+  lv_label_set_text(label, "WE HAVE 169A LEAKS");
+  lv_obj_set_x(label, 50);
 
 }
 
