@@ -7,7 +7,7 @@ extern Motor frontRight;
 extern Motor backRight;
 
 void drive(int y, int r);
-void autoDrive(int x, int y);
+void autoDrive(int x);
 void autoReset();
 void resetEncoders();
 extern Motor liftMotor;
