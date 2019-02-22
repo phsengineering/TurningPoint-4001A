@@ -355,7 +355,7 @@ else if(auton == 3) { //Red low flag
   pros::delay(2000);
   setIndexer(0);
   setIntake(0);
-  while(frontRight.get_position() < 35 && frontLeft.get_position() > -35) {
+  while(frontRight.get_position() < 15 && frontLeft.get_position() > -15) {
     frontLeft.move_velocity(-100);
     frontRight.move_velocity(100);
     backLeft.move_velocity(-100);
@@ -454,7 +454,7 @@ else if(auton == 4) { //Blue low flag
   setIndexer(0);
   setIntake(0);
 
-  while(frontRight.get_position() > -35 && frontLeft.get_position() < 35) {
+  while(frontRight.get_position() > -15 && frontLeft.get_position() < 15) {
     frontLeft.move_velocity(100);
     frontRight.move_velocity(-100);
     backLeft.move_velocity(100);
