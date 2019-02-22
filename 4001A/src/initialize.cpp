@@ -1,12 +1,28 @@
 #include "main.h"
-
+#include "subsystems.hpp"
 void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
+	if(auton > 5) {
+		auton = 0;
+	}
+	else {
+		auton++;
+	}
+
+
+	if (auton == 1) {
+		pros::lcd::set_text(2, "Blue autonomous");
+	}
+	else if (auton == 2) {
+		pros::lcd::set_text(2, "Back autonomous");
+	}
+	else if (auton == 3) {
+		pros::lcd::set_text(2, "Red Low flag autonomous");
+	}
+	else if(auton == 4) {
+		pros::lcd::set_text(2, "Blue Low flag autonomous");
+	}
+	else if(auton == 5) {
+		pros::lcd::set_text(2, "Programming skills");
 	}
 }
 
@@ -18,9 +34,9 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	lv_obj_t* label = lv_label_create(lv_scr_act(), NULL);
-  lv_label_set_text(label, "WE HAVE 169A LEAKS");
-  lv_obj_set_x(label, 50);
+	auton = 0;
+	pros::lcd::set_text(2, "Red autonomous");
+	pros::lcd::register_btn1_cb(on_center_button);
 
 }
 

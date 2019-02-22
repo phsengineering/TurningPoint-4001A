@@ -6,6 +6,7 @@ Motor backLeft(2, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
 Motor frontRight(3, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 Motor backRight(4, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 int lengthconstant = 1800;
+int auton = 0;
 void drive(int y, int r)
 {
     //Scale up y and r from 127 to 12000

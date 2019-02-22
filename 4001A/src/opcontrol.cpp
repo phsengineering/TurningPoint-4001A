@@ -18,7 +18,7 @@
 
 pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 pros::Controller partnerController = Controller(E_CONTROLLER_PARTNER);
-
+pros::ADIDigitalIn limitSwitch (1);
 void opcontrol() {
 	/*
 	while(backLeft.get_position() < 1000) {
@@ -114,6 +114,10 @@ void opcontrol() {
 			indexer.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 			setIndexer(0);
 			setIntake(0);
+		}
+		if(limitSwitch.get_new_press() == 1) {
+			//mainController.rumble(". -");
+			partnerController.rumble(". -");
 		}
 
 		std::ostringstream sstream;

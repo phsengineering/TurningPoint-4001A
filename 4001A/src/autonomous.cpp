@@ -1,66 +1,204 @@
 #include "main.h"
 #include "subsystems.hpp"
 #include <cmath>
-int runningSpeed = 2;
+int runningSpeed = 7;
 void autonomous() {
-  setIntake(127);
+  if(auton == 0) { //Red autonomous
+    setIntake(100);
+    setFlywheel(600);
+    resetEncoders();
+    while(frontLeft.get_position() < 1050) {
+      if (frontLeft.get_position() < 150 && runningSpeed < 150) {   //acceleration
+        //pow(runningSpeed, 2);
+        runningSpeed*=3.5;  //acceleration multiplier
+        autoDrive(runningSpeed);
+        pros::delay(10);
+      }
+      if(frontLeft.get_position() > 150 && frontLeft.get_position() < 780) {
+        runningSpeed = 150;
+        autoDrive(runningSpeed);
+      }
+      if(frontLeft.get_position() > 780) {  //deceleration
+        runningSpeed/=5;
+        //sqrt(runningSpeed);
+        autoDrive(runningSpeed);
+        pros::delay(10);
+      }
+    }
+    autoDrive(0);
+    autoReset();
+    pros::delay(1000);  //pause to intake ball
+    runningSpeed = -7;
+    while(frontLeft.get_position() > -1025) {
+      /*
+      if (frontLeft.get_position() > -150 && runningSpeed > -175) {
+        runningSpeed*=4;  //acceleration multiplier
+        autoDrive(runningSpeed);
+        pros::delay(10);
+      }
+      if(frontLeft.get_position() < -150 && frontLeft.get_position() > -1100) {
+        runningSpeed = -175;
+        autoDrive(runningSpeed);
+      }
+      if(frontLeft.get_position() > -1100) {
+        runningSpeed/=4;  //acceleration multiplier
+        autoDrive(runningSpeed);
+        pros::delay(10);
+      }
+      */
+      autoDrive(-70);
+    }
+    autoDrive(0);
+    autoReset();
+    pros::delay(450);
+    while(frontLeft.get_position() > -255 && frontRight.get_position() < 255) {
+      frontRight.move_velocity(75);
+      backRight.move_velocity(75);
+      frontLeft.move_velocity(-75);
+      backLeft.move_velocity(-75);
+    }
+    /*
+    frontRight.move_absolute(250, 75); //90* counterclockwise turn  (263)
+    backRight.move_absolute(250, 75);
+    frontLeft.move_absolute(-252, -75);
+    backLeft.move_absolute(-252, -75);
+    */
+    autoDrive(0);
+    autoReset();
+
+    //while(frontLeft.get_position() < 45) { //moving forward to make the first shot
+    //  autoDrive(75);
+    //}
+    autoDrive(0);
+    setIndexer(127);
+    pros::delay(750);
+    setIndexer(0);
+    resetEncoders();
+
+    while(frontLeft.get_position() < 725) { //moving forward for second shot (725, or 650)
+      autoDrive(75);
+    }
+    autoDrive(0);
+    autoReset();
+    setIndexer(127); //second shot
+    setIntake(127);
+    pros::delay(2000);
+    setIndexer(0);
+    setIntake(0);
+
+    runningSpeed = -7;
+    while(frontLeft.get_position() > -1375) {   //moving backwards to platform
+      /*
+      if (frontLeft.get_position() > -150 && runningSpeed > -175) {
+        runningSpeed*=4;  //acceleration multiplier
+        autoDrive(runningSpeed);
+        pros::delay(10);
+      }
+      if(frontLeft.get_position() < -150 && frontLeft.get_position() > -700) {
+        runningSpeed = -175;
+        autoDrive(runningSpeed);
+      }
+      if(frontLeft.get_position() > -700) {
+        runningSpeed/=4;  //acceleration multiplier
+        autoDrive(runningSpeed);
+        pros::delay(10);
+      }
+      */
+      autoDrive(-160);
+    }
+
+    autoDrive(0);
+    autoReset();
+    pros::delay(450);
+    while(frontLeft.get_position() < 340 && frontRight.get_position() > -340) {
+      frontRight.move_velocity(-75);
+      backRight.move_velocity(-75);
+      frontLeft.move_velocity(75);
+      backLeft.move_velocity(75);
+    }
+
+    autoDrive(0);
+    autoReset();
+    pros::delay(450);
+    while(frontLeft.get_position() < 925) { //climb platform
+      autoDrive(200);
+    }
+    autoDrive(0);
+    autoReset();
+}
+else if(auton == 1) { //Blue autonomous
+  setIntake(100);
   setFlywheel(600);
-  while(frontLeft.get_position() < 925) {
-    if (frontLeft.get_position() < 150 && runningSpeed < 175) {   //acceleration
-      pow(runningSpeed, 2);  //acceleration multiplier
+  resetEncoders();
+  while(frontLeft.get_position() < 1050) {
+    if (frontLeft.get_position() < 150 && runningSpeed < 150) {   //acceleration
+      //pow(runningSpeed, 2);
+      runningSpeed*=3.5;  //acceleration multiplier
       autoDrive(runningSpeed);
-      pros::delay(150);
+      pros::delay(10);
     }
-    if(frontLeft.get_position() > 150 && frontLeft.get_position() < 750) {
-      runningSpeed = 175;
+    if(frontLeft.get_position() > 150 && frontLeft.get_position() < 780) {
+      runningSpeed = 150;
       autoDrive(runningSpeed);
     }
-    if(frontLeft.get_position() > 750) {  //deceleration
-      sqrt(runningSpeed);  //deceleration multiplier
+    if(frontLeft.get_position() > 780) {  //deceleration
+      runningSpeed/=5;
+      //sqrt(runningSpeed);
       autoDrive(runningSpeed);
-      pros::delay(200);
+      pros::delay(10);
     }
   }
   autoDrive(0);
   autoReset();
   pros::delay(1000);  //pause to intake ball
-  runningSpeed = -2;
-  while(frontLeft.get_position() > -1070) {
+  runningSpeed = -7;
+  while(frontLeft.get_position() > -1025) {
+    /*
     if (frontLeft.get_position() > -150 && runningSpeed > -175) {
-      runningSpeed*=3;
+      runningSpeed*=4;  //acceleration multiplier
       autoDrive(runningSpeed);
-      pros::delay(150);
+      pros::delay(10);
     }
-    if(frontLeft.get_position() < -150 && frontLeft.get_position() > -750) {
+    if(frontLeft.get_position() < -150 && frontLeft.get_position() > -1100) {
       runningSpeed = -175;
       autoDrive(runningSpeed);
     }
-    if(frontLeft.get_position() > -750) {
-      runningSpeed/=4;
+    if(frontLeft.get_position() > -1100) {
+      runningSpeed/=4;  //acceleration multiplier
       autoDrive(runningSpeed);
-      pros::delay(200);
+      pros::delay(10);
     }
+    */
+    autoDrive(-70);
   }
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  frontRight.move_absolute(345, 75); //90* counterclockwise turn  (263)
-  backRight.move_absolute(345, 75);
-  frontLeft.move_absolute(-345, -75);
-  backLeft.move_absolute(-345, -75);
+  while(frontLeft.get_position() < 255 && frontRight.get_position() > -255) {
+    frontRight.move_velocity(-75);
+    backRight.move_velocity(-75);
+    frontLeft.move_velocity(75);
+    backLeft.move_velocity(75);
+  }
+  /*
+  frontRight.move_absolute(250, 75); //90* counterclockwise turn  (263)
+  backRight.move_absolute(250, 75);
+  frontLeft.move_absolute(-252, -75);
+  backLeft.move_absolute(-252, -75);
+  */
   autoDrive(0);
   autoReset();
 
-  while(frontLeft.get_position() < 45) { //moving forward to make the first shot
-    autoDrive(75);
-  }
+  //while(frontLeft.get_position() < 45) { //moving forward to make the first shot
+  //  autoDrive(75);
+  //}
   autoDrive(0);
   setIndexer(127);
   pros::delay(750);
   setIndexer(0);
   resetEncoders();
 
-  while(frontLeft.get_position() < 666) { //moving forward for second shot (333)
+  while(frontLeft.get_position() < 725) { //moving forward for second shot (725, or 650)
     autoDrive(75);
   }
   autoDrive(0);
@@ -71,41 +209,250 @@ void autonomous() {
   setIndexer(0);
   setIntake(0);
 
-  runningSpeed = -2;
+  runningSpeed = -7;
   while(frontLeft.get_position() > -1375) {   //moving backwards to platform
+    /*
     if (frontLeft.get_position() > -150 && runningSpeed > -175) {
-      runningSpeed*=3;
+      runningSpeed*=4;  //acceleration multiplier
       autoDrive(runningSpeed);
-      pros::delay(150);
+      pros::delay(10);
     }
-    if(frontLeft.get_position() < -150 && frontLeft.get_position() > -750) {
+    if(frontLeft.get_position() < -150 && frontLeft.get_position() > -700) {
       runningSpeed = -175;
       autoDrive(runningSpeed);
     }
-    if(frontLeft.get_position() > -750) {
-      runningSpeed/=4;
+    if(frontLeft.get_position() > -700) {
+      runningSpeed/=4;  //acceleration multiplier
       autoDrive(runningSpeed);
-      pros::delay(200);
+      pros::delay(10);
     }
+    */
+    autoDrive(-160);
   }
 
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  frontRight.move_absolute(-345, -75); //90* clockwise turn
-  backRight.move_absolute(-345, -75);
-  frontLeft.move_absolute(345, 75);
-  backLeft.move_absolute(345, 75);
+  while(frontLeft.get_position() > -340 && frontRight.get_position() < 340) {
+    frontRight.move_velocity(75);
+    backRight.move_velocity(75);
+    frontLeft.move_velocity(-75);
+    backLeft.move_velocity(-75);
+  }
 
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 1500) { //climb platform
+  while(frontLeft.get_position() < 925) { //climb platform
     autoDrive(200);
   }
   autoDrive(0);
   autoReset();
 }
+else if(auton == 2) {
+  setIntake(100);
+  resetEncoders();
+  while(frontLeft.get_position() < 1050) {
+    if (frontLeft.get_position() < 150 && runningSpeed < 150) {   //acceleration
+      //pow(runningSpeed, 2);
+      runningSpeed*=3.5;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    if(frontLeft.get_position() > 150 && frontLeft.get_position() < 780) {
+      runningSpeed = 150;
+      autoDrive(runningSpeed);
+    }
+    if(frontLeft.get_position() > 780) {  //deceleration
+      runningSpeed/=5;
+      //sqrt(runningSpeed);
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+  }
+  autoDrive(0);
+  autoReset();
+  pros::delay(1000);  //pause to intake ball
+  runningSpeed = -7;
+  while(frontLeft.get_position() > -1025) {
+    autoDrive(-70);
+  }
+  autoDrive(0);
+  autoReset();
+}
+else if(auton == 3) { //Red low flag
+  resetEncoders();
+  while(frontLeft.get_position() < 1050) {
+    if (frontLeft.get_position() < 150 && runningSpeed < 150) {   //acceleration
+      //pow(runningSpeed, 2);
+      runningSpeed*=3.5;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    if(frontLeft.get_position() > 150 && frontLeft.get_position() < 780) {
+      runningSpeed = 150;
+      autoDrive(runningSpeed);
+    }
+    if(frontLeft.get_position() > 780) {  //deceleration
+      runningSpeed/=5;
+      //sqrt(runningSpeed);
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+  }
+  autoDrive(0);
+  autoReset();
+  //PROGRAM IN TURN TO HIT LOW FLAG HERE
+}
+else if(auton == 4) { //Blue low flag
+  resetEncoders();
+  while(frontLeft.get_position() < 1050) {
+    if (frontLeft.get_position() < 150 && runningSpeed < 150) {   //acceleration
+      //pow(runningSpeed, 2);
+      runningSpeed*=3.5;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    if(frontLeft.get_position() > 150 && frontLeft.get_position() < 780) {
+      runningSpeed = 150;
+      autoDrive(runningSpeed);
+    }
+    if(frontLeft.get_position() > 780) {  //deceleration
+      runningSpeed/=5;
+      //sqrt(runningSpeed);
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+  }
+  autoDrive(0);
+  autoReset();
+  //PROGRAM IN TURN TO HIT LOW FLAG HERE
+}
+else if(auton == 5) { //programming skills
+  setIntake(100);
+  setFlywheel(600);
+  resetEncoders();
+  while(frontLeft.get_position() < 1050) {
+    if (frontLeft.get_position() < 150 && runningSpeed < 150) {   //acceleration
+      //pow(runningSpeed, 2);
+      runningSpeed*=3.5;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    if(frontLeft.get_position() > 150 && frontLeft.get_position() < 780) {
+      runningSpeed = 150;
+      autoDrive(runningSpeed);
+    }
+    if(frontLeft.get_position() > 780) {  //deceleration
+      runningSpeed/=5;
+      //sqrt(runningSpeed);
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+  }
+  autoDrive(0);
+  autoReset();
+  pros::delay(1000);  //pause to intake ball
+  runningSpeed = -7;
+  while(frontLeft.get_position() > -1025) {
+    /*
+    if (frontLeft.get_position() > -150 && runningSpeed > -175) {
+      runningSpeed*=4;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    if(frontLeft.get_position() < -150 && frontLeft.get_position() > -1100) {
+      runningSpeed = -175;
+      autoDrive(runningSpeed);
+    }
+    if(frontLeft.get_position() > -1100) {
+      runningSpeed/=4;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    */
+    autoDrive(-70);
+  }
+  autoDrive(0);
+  autoReset();
+  pros::delay(450);
+  while(frontLeft.get_position() > -255 && frontRight.get_position() < 255) {
+    frontRight.move_velocity(75);
+    backRight.move_velocity(75);
+    frontLeft.move_velocity(-75);
+    backLeft.move_velocity(-75);
+  }
+  /*
+  frontRight.move_absolute(250, 75); //90* counterclockwise turn  (263)
+  backRight.move_absolute(250, 75);
+  frontLeft.move_absolute(-252, -75);
+  backLeft.move_absolute(-252, -75);
+  */
+  autoDrive(0);
+  autoReset();
+
+  //while(frontLeft.get_position() < 45) { //moving forward to make the first shot
+  //  autoDrive(75);
+  //}
+  autoDrive(0);
+  setIndexer(127);
+  pros::delay(750);
+  setIndexer(0);
+  resetEncoders();
+
+  while(frontLeft.get_position() < 725) { //moving forward for second shot (725, or 650)
+    autoDrive(75);
+  }
+  autoDrive(0);
+  autoReset();
+  setIndexer(127); //second shot
+  setIntake(127);
+  pros::delay(2000);
+  setIndexer(0);
+  setIntake(0);
+
+  runningSpeed = -7;
+  while(frontLeft.get_position() > -1375) {   //moving backwards to platform
+    /*
+    if (frontLeft.get_position() > -150 && runningSpeed > -175) {
+      runningSpeed*=4;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    if(frontLeft.get_position() < -150 && frontLeft.get_position() > -700) {
+      runningSpeed = -175;
+      autoDrive(runningSpeed);
+    }
+    if(frontLeft.get_position() > -700) {
+      runningSpeed/=4;  //acceleration multiplier
+      autoDrive(runningSpeed);
+      pros::delay(10);
+    }
+    */
+    autoDrive(-160);
+  }
+
+  autoDrive(0);
+  autoReset();
+  pros::delay(450);
+  while(frontLeft.get_position() < 340 && frontRight.get_position() > -340) {
+    frontRight.move_velocity(-75);
+    backRight.move_velocity(-75);
+    frontLeft.move_velocity(75);
+    backLeft.move_velocity(75);
+  }
+
+  autoDrive(0);
+  autoReset();
+  pros::delay(450);
+  while(frontLeft.get_position() < 925) { //This value will change, as this is right from red front auton
+    autoDrive(200);
+  }
+  autoDrive(0);
+  autoReset();
+}
+}
+
 
 /*robot width = 12.25
   robot circumference = 38.4845
