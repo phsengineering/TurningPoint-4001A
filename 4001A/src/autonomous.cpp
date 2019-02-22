@@ -71,7 +71,7 @@ void autonomous() {
     //}
     autoDrive(0);
     setIndexer(127);
-    pros::delay(750);
+    pros::delay(300);
     setIndexer(0);
     resetEncoders();
 
@@ -120,7 +120,7 @@ void autonomous() {
     autoDrive(0);
     autoReset();
     pros::delay(450);
-    while(frontLeft.get_position() < 925) { //climb platform
+    while(frontLeft.get_position() < 1300) { //climb platform
       autoDrive(200);
     }
     autoDrive(0);
@@ -194,7 +194,7 @@ else if(auton == 1) { //Blue autonomous
   //}
   autoDrive(0);
   setIndexer(127);
-  pros::delay(750);
+  pros::delay(300);
   setIndexer(0);
   resetEncoders();
 
@@ -243,7 +243,7 @@ else if(auton == 1) { //Blue autonomous
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 925) { //climb platform
+  while(frontLeft.get_position() < 1300) { //climb platform
     autoDrive(200);
   }
   autoDrive(0);
@@ -341,7 +341,7 @@ else if(auton == 3) { //Red low flag
   //}
   autoDrive(0);
   setIndexer(127);
-  pros::delay(750);
+  pros::delay(300);
   setIndexer(0);
   resetEncoders();
 
@@ -439,7 +439,7 @@ else if(auton == 4) { //Blue low flag
   //}
   autoDrive(0);
   setIndexer(127);
-  pros::delay(750);
+  pros::delay(300);
   setIndexer(0);
   resetEncoders();
 
@@ -537,7 +537,7 @@ else if(auton == 5) { //programming skills
   //}
   autoDrive(0);
   setIndexer(127);
-  pros::delay(750);
+  pros::delay(300);
   setIndexer(0);
   resetEncoders();
 
@@ -586,7 +586,7 @@ else if(auton == 5) { //programming skills
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 925) { //This value will change, as this is right from red front auton
+  while(frontLeft.get_position() < 1550) { //This value will change, as this is right from red front auton
     autoDrive(200);
   }
   autoDrive(0);
