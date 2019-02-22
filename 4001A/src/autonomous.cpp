@@ -174,7 +174,7 @@ else if(auton == 1) { //Blue autonomous
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 275 && frontRight.get_position() > -275) {
+  while(frontLeft.get_position() < 265 && frontRight.get_position() > -265) {
     frontRight.move_velocity(-75);
     backRight.move_velocity(-75);
     frontLeft.move_velocity(75);
@@ -233,7 +233,7 @@ else if(auton == 1) { //Blue autonomous
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() > -340 && frontRight.get_position() < 340) {
+  while(frontLeft.get_position() > -305 && frontRight.get_position() < 305) {
     frontRight.move_velocity(75);
     backRight.move_velocity(75);
     frontLeft.move_velocity(-75);
@@ -419,7 +419,7 @@ else if(auton == 4) { //Blue low flag
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 275 && frontRight.get_position() > -275) {
+  while(frontLeft.get_position() < 265 && frontRight.get_position() > -265) {
     frontRight.move_velocity(-75);
     backRight.move_velocity(-75);
     frontLeft.move_velocity(75);
@@ -576,7 +576,7 @@ else if(auton == 5) { //programming skills
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 340 && frontRight.get_position() > -340) {
+  while(frontLeft.get_position() < 305 && frontRight.get_position() > -305) {
     frontRight.move_velocity(-75);
     backRight.move_velocity(-75);
     frontLeft.move_velocity(75);
