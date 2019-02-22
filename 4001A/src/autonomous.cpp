@@ -70,6 +70,7 @@ void autonomous() {
     //  autoDrive(75);
     //}
     autoDrive(0);
+    pros::delay(100);
     setIndexer(127);
     pros::delay(300);
     setIndexer(0);
@@ -87,7 +88,7 @@ void autonomous() {
     setIntake(0);
 
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1375) {   //moving backwards to platform
+    while(frontLeft.get_position() > -1400) {   //moving backwards to platform
       /*
       if (frontLeft.get_position() > -150 && runningSpeed > -175) {
         runningSpeed*=4;  //acceleration multiplier
@@ -120,7 +121,7 @@ void autonomous() {
     autoDrive(0);
     autoReset();
     pros::delay(450);
-    while(frontLeft.get_position() < 1300) { //climb platform
+    while(frontLeft.get_position() < 1600) { //climb platform
       autoDrive(200);
     }
     autoDrive(0);
@@ -233,7 +234,7 @@ else if(auton == 1) { //Blue autonomous
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() > -305 && frontRight.get_position() < 305) {
+  while(frontLeft.get_position() > -250 && frontRight.get_position() < 250) {
     frontRight.move_velocity(75);
     backRight.move_velocity(75);
     frontLeft.move_velocity(-75);
@@ -536,6 +537,7 @@ else if(auton == 5) { //programming skills
   //  autoDrive(75);
   //}
   autoDrive(0);
+  pros::delay(100);
   setIndexer(127);
   pros::delay(300);
   setIndexer(0);
@@ -553,7 +555,7 @@ else if(auton == 5) { //programming skills
   setIntake(0);
 
   runningSpeed = -7;
-  while(frontLeft.get_position() > -1375) {   //moving backwards to platform
+  while(frontLeft.get_position() > -1400) {   //moving backwards to platform
     /*
     if (frontLeft.get_position() > -150 && runningSpeed > -175) {
       runningSpeed*=4;  //acceleration multiplier
@@ -576,7 +578,7 @@ else if(auton == 5) { //programming skills
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 305 && frontRight.get_position() > -305) {
+  while(frontLeft.get_position() < 340 && frontRight.get_position() > -340) {
     frontRight.move_velocity(-75);
     backRight.move_velocity(-75);
     frontLeft.move_velocity(75);
@@ -586,7 +588,7 @@ else if(auton == 5) { //programming skills
   autoDrive(0);
   autoReset();
   pros::delay(450);
-  while(frontLeft.get_position() < 1550) { //This value will change, as this is right from red front auton
+  while(frontLeft.get_position() < 2350) { //climb platform
     autoDrive(200);
   }
   autoDrive(0);
