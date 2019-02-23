@@ -19,7 +19,10 @@
 pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 pros::Controller partnerController = Controller(E_CONTROLLER_PARTNER);
 pros::ADIDigitalIn limitSwitch (1);
+pros::Vision vision_sensor(11);
 void opcontrol() {
+	vision_sensor.clear_led();
+
 	/*
 	while(backLeft.get_position() < 1000) {
 		backLeft.move_voltage(12000);
@@ -33,6 +36,11 @@ void opcontrol() {
 	frontLeft.move_voltage(0);
 	*/
 	while(true) {
+		//Vision sensor test code. Gets objects by size
+		vision_object_s_t rtn = vision_sensor.get_by_size(0);
+    // Gets the largest object
+    pros::lcd::set_text(4, rtn.signature);
+    pros::delay(2);
 		//Drive
 		int y = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 		int r = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_X);

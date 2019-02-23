@@ -37,7 +37,6 @@ void initialize() {
 	auton = 0;
 	pros::lcd::set_text(2, "Red autonomous");
 	pros::lcd::register_btn1_cb(on_center_button);
-
 }
 
 /**
