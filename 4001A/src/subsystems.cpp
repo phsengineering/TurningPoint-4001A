@@ -1,9 +1,9 @@
 #include "subsystems.hpp"
 
 //Drivetrain
-Motor frontLeft(1, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+Motor frontLeft(1, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 Motor backLeft(2, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
-Motor frontRight(3, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor frontRight(3, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
 Motor backRight(4, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 
 int auton = 0;
