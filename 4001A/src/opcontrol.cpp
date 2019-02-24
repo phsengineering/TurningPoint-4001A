@@ -97,7 +97,7 @@ void opcontrol() {
 		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
 
-			setIntake(64);
+			setIntake(100);
 		}
 		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_X))
 		{
@@ -108,7 +108,7 @@ void opcontrol() {
 		{
 			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
 
-			setIntake(74);
+			setIntake(110);
 			setIndexer(127);
 		}
 		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L2))
