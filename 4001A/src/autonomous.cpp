@@ -29,7 +29,7 @@ void autonomous() {
     autoReset();
     pros::delay(1000);  //pause to intake ball
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1025) {
+    while(frontLeft.get_position() > -1005) {
       /*
       if (frontLeft.get_position() > -150 && runningSpeed > -175) {
         runningSpeed*=4;  //acceleration multiplier
@@ -46,12 +46,12 @@ void autonomous() {
         pros::delay(10);
       }
       */
-      autoDrive(-70);
+      autoDrive(-120);
     }
     autoDrive(0);
-    autoReset();
+    //autoReset();  //braking will lift front up. rear motors are not direct drive
     pros::delay(450);
-    while(frontLeft.get_position() > -255 && frontRight.get_position() < 255) {
+    while(frontLeft.get_position() > -255 && frontRight.get_position() < 255) {   //90* counterclockwise turn 
       frontRight.move_velocity(75);
       backRight.move_velocity(75);
       frontLeft.move_velocity(-75);
@@ -66,11 +66,13 @@ void autonomous() {
     autoDrive(0);
     autoReset();
 
-    //while(frontLeft.get_position() < 45) { //moving forward to make the first shot
-    //  autoDrive(75);
+    while(frontLeft.get_position() < 150) { //moving forward to make the first shot abou 2 in.
+     autoDrive(75);
     //}
     autoDrive(0);
-    pros::delay(100);
+    autoReset();
+      
+    pros::delay(100);   //first shot
     setIndexer(127);
     pros::delay(300);
     setIndexer(0);
@@ -79,8 +81,10 @@ void autonomous() {
     while(frontLeft.get_position() < 725) { //moving forward for second shot (725, or 650)
       autoDrive(75);
     }
+      
     autoDrive(0);
     autoReset();
+      
     setIndexer(127); //second shot
     setIntake(127);
     pros::delay(2000);
@@ -88,7 +92,7 @@ void autonomous() {
     setIntake(0);
 
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1400) {   //moving backwards to platform
+    while(frontLeft.get_position() > -1300) {   //moving backwards to platform
       /*
       if (frontLeft.get_position() > -150 && runningSpeed > -175) {
         runningSpeed*=4;  //acceleration multiplier
@@ -109,7 +113,8 @@ void autonomous() {
     }
 
     autoDrive(0);
-    autoReset();
+    //autoReset();  //no direct drive on back wheels
+      
     pros::delay(450);
     while(frontLeft.get_position() < 340 && frontRight.get_position() > -340) {
       frontRight.move_velocity(-75);
@@ -120,8 +125,8 @@ void autonomous() {
 
     autoDrive(0);
     autoReset();
-    pros::delay(450);
-    while(frontLeft.get_position() < 1600) { //climb platform
+    pros::delay(250);
+    while(frontLeft.get_position() < 1390) { //climb platform
       autoDrive(200);
     }
     autoDrive(0);
@@ -153,7 +158,7 @@ else if(auton == 1) { //Blue autonomous
   autoReset();
   pros::delay(1000);  //pause to intake ball
   runningSpeed = -7;
-  while(frontLeft.get_position() > -1025) {
+  while(frontLeft.get_position() > -1005) {
     /*
     if (frontLeft.get_position() > -150 && runningSpeed > -175) {
       runningSpeed*=4;  //acceleration multiplier
@@ -170,10 +175,10 @@ else if(auton == 1) { //Blue autonomous
       pros::delay(10);
     }
     */
-    autoDrive(-70);
+    autoDrive(-120);
   }
   autoDrive(0);
-  autoReset();
+  //autoReset();  //rear wheels direct driven't
   pros::delay(450);
   while(frontLeft.get_position() < 265 && frontRight.get_position() > -265) {
     frontRight.move_velocity(-75);
@@ -190,11 +195,13 @@ else if(auton == 1) { //Blue autonomous
   autoDrive(0);
   autoReset();
 
-  //while(frontLeft.get_position() < 45) { //moving forward to make the first shot
-  //  autoDrive(75);
+  while(frontLeft.get_position() < 150) { //moving forward to make the first shot
+    autoDrive(75);
   //}
   autoDrive(0);
-  setIndexer(127);
+  autoReset();
+    
+  setIndexer(127); //move indexer to shoot first ball
   pros::delay(300);
   setIndexer(0);
   resetEncoders();
@@ -204,6 +211,7 @@ else if(auton == 1) { //Blue autonomous
   }
   autoDrive(0);
   autoReset();
+    
   setIndexer(127); //second shot
   setIntake(127);
   pros::delay(2000);
@@ -211,7 +219,7 @@ else if(auton == 1) { //Blue autonomous
   setIntake(0);
 
   runningSpeed = -7;
-  while(frontLeft.get_position() > -1375) {   //moving backwards to platform
+  while(frontLeft.get_position() > -1300) {   //moving backwards to platform
     /*
     if (frontLeft.get_position() > -150 && runningSpeed > -175) {
       runningSpeed*=4;  //acceleration multiplier
@@ -232,7 +240,7 @@ else if(auton == 1) { //Blue autonomous
   }
 
   autoDrive(0);
-  autoReset();
+  //autoReset();  //rear wheels isn't direct drive
   pros::delay(450);
   while(frontLeft.get_position() > -250 && frontRight.get_position() < 250) {
     frontRight.move_velocity(75);
