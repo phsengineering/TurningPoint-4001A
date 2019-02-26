@@ -46,12 +46,12 @@ void autonomous() {
         pros::delay(10);
       }
       */
-      autoDrive(-70);
+      autoDrive(-140);
     }
     autoDrive(0);
     autoReset();
     pros::delay(450);
-    while(frontLeft.get_position() > -255 && frontRight.get_position() < 255) {
+    while(frontLeft.get_position() > -248 && frontRight.get_position() < 248) {
       frontRight.move_velocity(75);
       backRight.move_velocity(75);
       frontLeft.move_velocity(-75);
@@ -66,17 +66,18 @@ void autonomous() {
     autoDrive(0);
     autoReset();
 
-    //while(frontLeft.get_position() < 45) { //moving forward to make the first shot
-    //  autoDrive(75);
-    //}
+    while(frontLeft.get_position() < 205) { //moving forward to make the first shot
+      autoDrive(75);
+    }
     autoDrive(0);
+    autoReset();
     pros::delay(100);
     setIndexer(127);
     pros::delay(300);
     setIndexer(0);
     resetEncoders();
 
-    while(frontLeft.get_position() < 725) { //moving forward for second shot (725, or 650)
+    while(frontLeft.get_position() < 666) { //moving forward for second shot (725, or 650)
       autoDrive(75);
     }
     autoDrive(0);
@@ -88,7 +89,7 @@ void autonomous() {
     setIntake(0);
 
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1400) {   //moving backwards to platform
+    while(frontLeft.get_position() > -1500) {   //moving backwards to platform
       /*
       if (frontLeft.get_position() > -150 && runningSpeed > -175) {
         runningSpeed*=4;  //acceleration multiplier
@@ -111,7 +112,7 @@ void autonomous() {
     autoDrive(0);
     autoReset();
     pros::delay(450);
-    while(frontLeft.get_position() < 340 && frontRight.get_position() > -340) {
+    while(frontLeft.get_position() < 320 && frontRight.get_position() > -320) {
       frontRight.move_velocity(-75);
       backRight.move_velocity(-75);
       frontLeft.move_velocity(75);
@@ -121,11 +122,12 @@ void autonomous() {
     autoDrive(0);
     autoReset();
     pros::delay(450);
-    while(frontLeft.get_position() < 1600) { //climb platform
+    while(frontLeft.get_position() < 1350) { //climb platform
       autoDrive(200);
     }
     autoDrive(0);
     autoReset();
+
 }
 else if(auton == 1) { //Blue autonomous
   setIntake(100);
