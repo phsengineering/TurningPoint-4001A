@@ -48,7 +48,7 @@ void opcontrol() {
 		//Make r half as sensitive if not going forward or backward
 		if(std::abs(y) < 16)
 		{
-			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.6), r);
+			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.5 ), r);
 		}
 
 		drive(y, r);
