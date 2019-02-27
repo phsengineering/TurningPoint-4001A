@@ -143,6 +143,8 @@ void opcontrol() {
 
 		sstream << backLeft.get_position();
 		std::string blString = sstream.str();
+		sstream << flywheel.get_temperature();
+		std::string tempString = sstream.str();
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_Y)) {
 			frontLeft.tare_position();
 			backLeft.tare_position();
@@ -150,10 +152,16 @@ void opcontrol() {
 			backRight.tare_position();
 
 		}
+		if(flywheel.get_temperature() > 45.0) {
+			mainController.rumble("-");
+			mainController.set_text(0, 0, "FLYWHEEL OVERHEATING");
+			pros::delay(10);
+		}
 		pros::lcd::set_text(0, "Back Right "  + brString);
 		pros::lcd::set_text(1, "Back left " + blString);
 		pros::lcd::set_text(2, "Front Left " + flString);
 		pros::lcd::set_text(3, "Front Right " + frString);
 		pros::delay(20);
+
 	}
 }
