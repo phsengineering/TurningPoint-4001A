@@ -379,7 +379,7 @@ else if(auton == 3) { //Red low flag
   autoDrive(0);
   autoReset();
 
-  while(frontLeft.get_position() > -100) { //pull back from cap
+  while(frontLeft.get_position() > -80) { //pull back from cap
     autoDrive(-160);
   }
   autoDrive(0);
