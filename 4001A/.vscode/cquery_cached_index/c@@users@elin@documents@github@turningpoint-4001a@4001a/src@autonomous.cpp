@@ -85,7 +85,7 @@ void autonomous() {
     setIndexer(0);
     setIntake(0);
     runningSpeed = -7;
-    while(frontLeft.get_position() > -2150) {   //moving backwards to platform
+    while(frontLeft.get_position() > -1950) {   //moving backwards to platform
       /*
       if (frontLeft.get_position() > -150 && runningSpeed > -175) {
         runningSpeed*=4;  //acceleration multiplier
