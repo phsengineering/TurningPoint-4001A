@@ -254,8 +254,27 @@ else if(auton == 1) { //Blue autonomous
 }
 else if(auton == 2) { //Back autonomous
   setIntake(100);
+  setFlywheel(600);
+  while(flywheel.get_actual_velocity() < 545) {
+    pros::delay(10);
+  }
+  setIndexer(127);
+  pros::delay(1000);
+  setIndexer(0);
+  setIntake(0);
   resetEncoders();
-  while(frontLeft.get_position() < 1050) {
+while(frontRight.get_position() > -140) {
+    frontLeft.move_velocity(60);
+    backLeft.move_velocity(60);
+    backRight.move_velocity(-100);
+    frontRight.move_velocity(-100);
+  }
+
+  autoDrive(0);
+  resetEncoders();
+  pros::delay(1000);
+  setIntake(100);
+  while(frontLeft.get_position() < 1150) {
     if (frontLeft.get_position() < 150 && runningSpeed < 150) {   //acceleration
       //pow(runningSpeed, 2);
       runningSpeed*=3.5;  //acceleration multiplier
@@ -274,7 +293,31 @@ else if(auton == 2) { //Back autonomous
     }
   }
   autoDrive(0);
+
   autoReset();
+  pros::delay(1500);
+  while(frontLeft.get_position() > -200) {
+    autoDrive(-150);
+  }
+  autoDrive(0);
+  autoReset();
+  while(frontLeft.get_position() < (0.75*255) && frontRight.get_position() > -(0.75*255)) {
+    frontLeft.move_velocity(150);
+    backLeft.move_velocity(150);
+    frontRight.move_velocity(-150);
+    backRight.move_velocity(-150);
+  }
+  autoDrive(0);
+  autoReset();
+  pros::delay(100);
+  autoDrive(-150);
+  pros::delay(1500);
+  resetEncoders();
+  while(frontLeft.get_position() < 1350) {
+    autoDrive(150);
+  }
+  autoDrive(0);
+  resetEncoders();
 }
 else if(auton == 3) { //Red low flag
   setIntake(100);
