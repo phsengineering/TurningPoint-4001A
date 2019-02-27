@@ -27,25 +27,9 @@ void autonomous() {
     }
     autoDrive(0);
     autoReset();
-    pros::delay(1000);  //pause to intake ball
+    pros::delay(400);  //pause to intake ball
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1025) {
-      /*
-      if (frontLeft.get_position() > -150 && runningSpeed > -175) {
-        runningSpeed*=4;  //acceleration multiplier
-        autoDrive(runningSpeed);
-        pros::delay(10);
-      }
-      if(frontLeft.get_position() < -150 && frontLeft.get_position() > -1100) {
-        runningSpeed = -175;
-        autoDrive(runningSpeed);
-      }
-      if(frontLeft.get_position() > -1100) {
-        runningSpeed/=4;  //acceleration multiplier
-        autoDrive(runningSpeed);
-        pros::delay(10);
-      }
-      */
+    while(frontLeft.get_position() > -1055) {
       autoDrive(-140);
     }
     autoDrive(0);
@@ -57,39 +41,51 @@ void autonomous() {
       frontLeft.move_velocity(-75);
       backLeft.move_velocity(-75);
     }
-    /*
-    frontRight.move_absolute(250, 75); //90* counterclockwise turn  (263)
-    backRight.move_absolute(250, 75);
-    frontLeft.move_absolute(-252, -75);
-    backLeft.move_absolute(-252, -75);
-    */
     autoDrive(0);
     autoReset();
-
-    while(frontLeft.get_position() < 205) { //moving forward to make the first shot
+    while(frontLeft.get_position() < 225) { //moving forward for first shot
       autoDrive(75);
     }
+
     autoDrive(0);
     autoReset();
-    pros::delay(100);
     setIndexer(127);
     pros::delay(300);
     setIndexer(0);
     resetEncoders();
 
-    while(frontLeft.get_position() < 666) { //moving forward for second shot (725, or 650)
+    while(frontLeft.get_position() < 576) { //moving forward for second shot (725, or 650)
       autoDrive(75);
     }
     autoDrive(0);
     autoReset();
     setIndexer(127); //second shot
     setIntake(127);
-    pros::delay(2000);
+    pros::delay(800);
     setIndexer(0);
     setIntake(0);
+    while(frontRight.get_position() < 10 && frontLeft.get_position() > -10) { //turn for low flag
+      frontLeft.move_velocity(-100);
+      frontRight.move_velocity(100);
+      backLeft.move_velocity(-100);
+      backRight.move_velocity(100);
 
+    }
+    autoDrive(0);
+    autoReset();
+    autoDrive(150);
+    pros::delay(700); //move forward to toggle flag and align with wall
+
+    autoDrive(0);
+    autoReset();
+
+    setIntake(127);
+    setIndexer(127); //index in for future cap flip
+    pros::delay(400);
+    setIndexer(0);
+    setIntake(0);
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1500) {   //moving backwards to platform
+    while(frontLeft.get_position() > -2150) {   //moving backwards to platform
       /*
       if (frontLeft.get_position() > -150 && runningSpeed > -175) {
         runningSpeed*=4;  //acceleration multiplier
@@ -112,7 +108,7 @@ void autonomous() {
     autoDrive(0);
     autoReset();
     pros::delay(100);
-    while(frontLeft.get_position() < 255 && frontRight.get_position() > -255) { //clockwise turn to align
+    while(frontLeft.get_position() < 300 && frontRight.get_position() > -300) { //clockwise turn to align
       frontRight.move_velocity(-75);
       backRight.move_velocity(-75);
       frontLeft.move_velocity(75);
