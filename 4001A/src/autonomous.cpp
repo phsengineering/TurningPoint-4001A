@@ -300,9 +300,9 @@ else if(auton == 3) { //Red low flag
   }
   autoDrive(0);
   autoReset();
-  pros::delay(1000);  //pause to intake ball
+  pros::delay(400);  //pause to intake ball
   runningSpeed = -7;
-  while(frontLeft.get_position() > -1025) {
+  while(frontLeft.get_position() > -1055) {
     autoDrive(-140);
   }
   autoDrive(0);
@@ -316,7 +316,7 @@ else if(auton == 3) { //Red low flag
   }
   autoDrive(0);
   autoReset();
-  while(frontLeft.get_position() < 285) { //moving forward for first shot
+  while(frontLeft.get_position() < 225) { //moving forward for first shot
     autoDrive(75);
   }
 
@@ -334,10 +334,10 @@ else if(auton == 3) { //Red low flag
   autoReset();
   setIndexer(127); //second shot
   setIntake(127);
-  pros::delay(2000);
+  pros::delay(800);
   setIndexer(0);
   setIntake(0);
-  while(frontRight.get_position() < 11 && frontLeft.get_position() > -11) { //turn for low flag
+  while(frontRight.get_position() < 10 && frontLeft.get_position() > -10) { //turn for low flag
     frontLeft.move_velocity(-100);
     frontRight.move_velocity(100);
     backLeft.move_velocity(-100);
@@ -372,30 +372,46 @@ else if(auton == 3) { //Red low flag
   }
   autoDrive(0);
   autoReset();
-  setIntake(-127);
-  while(frontLeft.get_position() < 700) { //go ahead and hit cap
-    autoDrive(140);
+  setIntake(-60);
+  while(frontLeft.get_position() < 930) { //go ahead and hit cap
+    autoDrive(120);
   }
   autoDrive(0);
   autoReset();
-  /* //gonna try to hit middle flag
+
+  while(frontLeft.get_position() > -100) { //pull back from cap
+    autoDrive(-160);
+  }
+  autoDrive(0);
+  autoReset();
+
+  setFlywheel(0); //the flywheel, otherwise okeee it overheats the motors
+  pros::delay(100);
+  while(frontLeft.get_position() > -175 && frontRight.get_position() < 175) { //clockwise turn to align with cap
+    frontRight.move_velocity(75);
+    backRight.move_velocity(75);
+    frontLeft.move_velocity(-75);
+    backLeft.move_velocity(-75);
+  }
   autoDrive(0);
   autoReset();
   pros::delay(100);
-  while(frontRight.get_position() < 30 && frontLeft.get_position() > -30) { //turn for flag
-    frontLeft.move_velocity(-100);
-    frontRight.move_velocity(100);
-    backLeft.move_velocity(-100);
-    backRight.move_velocity(100);
-    setIntake(0);
+  while(frontLeft.get_position() < 900) {
+    frontLeft.move_velocity(180);
+    frontRight.move_velocity(200);
+    backRight.move_velocity(200);
+    backLeft.move_velocity(180);
+  }
+  autoDrive(0);
+  resetEncoders();
+  while(frontLeft.get_position() < 100) {
+    frontRight.move_velocity(200);
+    backRight.move_velocity(200);
+
   }
   autoDrive(0);
   autoReset();
-  setIndexer(127); //third shot
-  pros::delay(2000);
-  setIndexer(0);
-  */
-  setFlywheel(0); //the flywheel, otherwise okeee it overheats the motors
+
 
 }
 else if(auton == 4) { //Blue low flag THIS NEEdS TO BE UPDATED.
