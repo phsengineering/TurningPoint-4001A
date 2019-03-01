@@ -18,7 +18,7 @@
 
 pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 pros::Controller partnerController = Controller(E_CONTROLLER_PARTNER);
-pros::ADIDigitalIn limitSwitch (1);
+
 pros::Vision vision_sensor(11);
 void opcontrol() {
 	vision_sensor.clear_led();
@@ -48,7 +48,7 @@ void opcontrol() {
 		//Make r half as sensitive if not going forward or backward
 		if(std::abs(y) < 16)
 		{
-			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.5 ), r);
+			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.4 ), r);
 		}
 
 		drive(y, r);
@@ -97,7 +97,7 @@ void opcontrol() {
 		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R2))
 		{
 
-			setIntake(100);
+			setIntake(127);
 		}
 		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_X))
 		{
@@ -108,13 +108,13 @@ void opcontrol() {
 		{
 			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
 
-			setIntake(110);
-			setIndexer(127);
+			setIntake(127);
+			setIndexer(110);
 		}
 		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L2))
 		{
 			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
-			setIndexer(-127);
+			setIndexer(-100);
 		}
 		else
 		{
@@ -152,7 +152,7 @@ void opcontrol() {
 			backRight.tare_position();
 
 		}
-		if(flywheel.get_temperature() > 45.0) {
+		if(flywheel.get_temperature() > 70.0) {
 			mainController.rumble("-");
 			mainController.set_text(0, 0, "FLYWHEEL OVERHEATING");
 			pros::delay(10);

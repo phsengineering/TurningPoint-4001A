@@ -1,7 +1,7 @@
 #include "main.h"
 #include "subsystems.hpp"
 void on_center_button() {
-	if(auton > 5) {
+	if(auton > 6) {
 		auton = 0;
 	}
 	else {
@@ -10,18 +10,21 @@ void on_center_button() {
 
 
 	if (auton == 1) {
-		pros::lcd::set_text(2, "Blue autonomous");
+		pros::lcd::set_text(2, "BLUE autonomous");
 	}
 	else if (auton == 2) {
-		pros::lcd::set_text(2, "Back autonomous");
+		pros::lcd::set_text(2, "RED Back autonomous");
 	}
 	else if (auton == 3) {
-		pros::lcd::set_text(2, "Red Low flag autonomous");
+		pros::lcd::set_text(2, "BLUE Back autonomous");
 	}
-	else if(auton == 4) {
-		pros::lcd::set_text(2, "Blue Low flag autonomous");
+	else if (auton == 4) {
+		pros::lcd::set_text(2, "RED Low flag autonomous");
 	}
 	else if(auton == 5) {
+		pros::lcd::set_text(2, "BLUE Low flag autonomous");
+	}
+	else if(auton == 6) {
 		pros::lcd::set_text(2, "Programming skills");
 	}
 }
@@ -36,7 +39,8 @@ void initialize() {
 	pros::lcd::initialize();
 	auton = 0;
 	pros::lcd::set_text(1, "169A holecounted us");
-	pros::lcd::set_text(2, "Red autonomous");
+	pros::lcd::set_text(2, "RED autonomous");
+	pros::lcd::set_text(3, "729M");
 	pros::lcd::register_btn1_cb(on_center_button);
 }
 
