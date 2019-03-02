@@ -40,9 +40,9 @@ void initialize() {
 	auton = 0;
 
 
-	pros::lcd::set_text(1, "169A holecounted us");
-	pros::lcd::set_text(2, "RED autonomous");
-	pros::lcd::set_text(3, "729M");
+	pros::lcd::set_text(1, "4001A");
+	pros::lcd::set_text(3, "RED autonomous");
+	pros::lcd::set_text(5, "Auton Ready");
 	pros::lcd::register_btn1_cb(on_center_button);
 }
 

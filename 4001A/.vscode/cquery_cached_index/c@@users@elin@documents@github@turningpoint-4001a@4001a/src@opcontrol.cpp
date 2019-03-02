@@ -23,11 +23,15 @@ pros::Vision vision_sensor(11);
 
 void opcontrol() {
 	vision_sensor.clear_led();
+	int count = 0;
+	/* //drive hold function w/o button
 	frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 	backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 	backRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 	frontRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-	/*
+*/
+
+	/* idk what this is
 	while(backLeft.get_position() < 1000) {
 		backLeft.move_voltage(12000);
 		backRight.move_voltage(12000);
@@ -39,6 +43,7 @@ void opcontrol() {
 	frontRight.move_voltage(0);
 	frontLeft.move_voltage(0);
 	*/
+
 	while(true) {
 		//Vision sensor test code. Gets objects by size
 		vision_object_s_t rtn = vision_sensor.get_by_size(0);
@@ -54,10 +59,26 @@ void opcontrol() {
 		{
 			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.4 ), r);
 		}
-
 		drive(y, r);
 
+		//Drive brake
+		if(mainController.get_digital(E_CONTROLLER_DIGITAL_R2))
+		{
+			frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			backRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			frontRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+		}
+		else
+		{
+			frontLeft.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+			backLeft.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+			backRight.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+			frontRight.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+		}
+
 		//Lift
+/*
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_L1))
 		{
 			liftMotor.set_brake_mode(E_MOTOR_BRAKE_HOLD);
@@ -65,18 +86,38 @@ void opcontrol() {
 		}
 		else
 		{
-			liftMotor.set_brake_mode(E_MOTOR_BRAKE_COAST);
+			liftMotor.set_brake_mode(E_MOTOR_BRAKE_HOLD); //change this to
 			setLift(mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y));
 		}
+*/
+		if(abs(mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y)) < 10) {
+			liftMotor.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			setLift(0);
+			}
+		else {
+			liftMotor.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			setLift(E_CONTROLLER_ANALOG_RIGHT_Y);
+			}
 
 		//Flywheel
+		/*
 		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R1))
-		{
+	{
 			setFlywheel(600);
 		}
-		else
+		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_A))
 		{
 			setFlywheel(0);
+		}
+		*/
+		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R1)) { //when clicked on, it will increase count by 1 and then check to see if it is odd or even
+			count++;
+			if(count % 2 == 1) { //if odd, set flywheel on
+				setFlywheel(600);
+			}
+			else {
+				setFlywheel(0); //if even, turn off
+			}
 		}
 
 		//Intake
@@ -97,36 +138,33 @@ void opcontrol() {
 			setIntake(0);
 		}
 */
-		//Indexer and intake
-		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R2))
-		{
 
+		//Indexer and intake
+		if(partnerController.get_digital(E_CONTROLLER_DIGITAL_R2)){
 			setIntake(127);
 		}
-		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_X))
-		{
 
+		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_X)){
 			setIntake(-127);
 		}
-		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L1))
-		{
-			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
 
+		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
 			setIntake(127);
 			setIndexer(110);
 		}
-		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L2))
-		{
+
+		else if(partnerController.get_digital(E_CONTROLLER_DIGITAL_L2)){
 			indexer.set_brake_mode(E_MOTOR_BRAKE_COAST);
 			setIndexer(-100);
 		}
 		else
-		{
-			//intake.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+		{	//intake.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 			indexer.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 			setIndexer(0);
 			setIntake(0);
 		}
+
 		if(limitSwitch.get_new_press() == 1) {
 			//mainController.rumble(". -");
 			partnerController.rumble(". -");
