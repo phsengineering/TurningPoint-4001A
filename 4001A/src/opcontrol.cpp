@@ -20,9 +20,13 @@ pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 pros::Controller partnerController = Controller(E_CONTROLLER_PARTNER);
 
 pros::Vision vision_sensor(11);
+
 void opcontrol() {
 	vision_sensor.clear_led();
-
+	frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+	backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+	backRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+	frontRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 	/*
 	while(backLeft.get_position() < 1000) {
 		backLeft.move_voltage(12000);
@@ -131,6 +135,15 @@ void opcontrol() {
 			//mainController.rumble(". -");
 			mainController.rumble(". -");
 		}
+		/*
+		if(mainController.get_digital(E_CONTROLLER_DIGITAL_R2)) {
+			frontLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			frontRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			backLeft.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			backRight.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+
+		}
+		*/
 		std::ostringstream sstream;
 		sstream << backRight.get_position();
 		std::string brString = sstream.str();

@@ -50,13 +50,13 @@ void autonomous() {
     autoReset();
     pros::delay(400);  //pause to intake ball
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1055) {
+    while(frontLeft.get_position() > -1000) {
       autoDrive(-140);
     }
     autoDrive(0);
     autoReset();
     pros::delay(250);
-    while(frontLeft.get_position() > -250 && frontRight.get_position() < 250) {
+    while(frontLeft.get_position() > -289 && frontRight.get_position() < 289) {
       frontRight.move_velocity(75);
       backRight.move_velocity(75);
       frontLeft.move_velocity(-75);
@@ -64,7 +64,8 @@ void autonomous() {
     }
     autoDrive(0);
     autoReset();
-    while(frontLeft.get_position() < 215) { //moving forward for first shot
+    pros::delay(250);
+    while(frontLeft.get_position() < 135) { //moving forward for first shot
       autoDrive(75);
     }
 
@@ -75,7 +76,7 @@ void autonomous() {
     setIndexer(0);
     resetEncoders();
 
-    while(frontLeft.get_position() < 586) { //moving forward for second shot (725, or 650)
+    while(frontLeft.get_position() < 666) { //moving forward for second shot (725, or 650)
       autoDrive(75);
     }
     autoDrive(0);
@@ -86,7 +87,7 @@ void autonomous() {
     setIndexer(0);
     pros::delay(1200);
     setIntake(0);
-    while(frontRight.get_position() < 10 && frontLeft.get_position() > -10) { //turn for low flag
+    while(frontRight.get_position() < 11 && frontLeft.get_position() > -11) { //turn for low flag
       frontLeft.move_velocity(-100);
       frontRight.move_velocity(100);
       backLeft.move_velocity(-100);
@@ -96,7 +97,7 @@ void autonomous() {
     autoDrive(0);
     autoReset();
     autoDrive(150);
-    pros::delay(650); //move forward to toggle flag and align with wall
+    pros::delay(720); //move forward to toggle flag and align with wall
 
     autoDrive(0);
     autoReset();
@@ -107,7 +108,7 @@ void autonomous() {
     setIndexer(0);
     setIntake(0);
     runningSpeed = -7;
-    while(frontLeft.get_position() > -1950) {   //moving backwards to platform
+    while(frontLeft.get_position() > -2000) {   //moving backwards to platform
     autoDrive(-160);
     }
 
@@ -256,7 +257,7 @@ else if(auton == 2) { //RED Back autonomous
   setIndexer(0);
   setIntake(0);
   resetEncoders();
-while(frontRight.get_position() > -140) {
+while(frontRight.get_position() > -240) {
     frontLeft.move_velocity(60);
     backLeft.move_velocity(60);
     backRight.move_velocity(-100);
@@ -306,7 +307,7 @@ while(frontRight.get_position() > -140) {
   autoDrive(-150);
   pros::delay(1500);
   resetEncoders();
-  while(frontLeft.get_position() < 1350) {
+  while(frontLeft.get_position() < 1500) {
     autoDrive(150);
   }
   autoDrive(0);
@@ -316,7 +317,7 @@ while(frontRight.get_position() > -140) {
 
 else if(auton == 3) { //Blue Back autonomous
   setFlywheel(600);
-  while(flywheel.get_actual_velocity() < 525) {
+  while(flywheel.get_actual_velocity() < 530) {
     pros::delay(1000);
   }
   setIndexer(127);
@@ -409,13 +410,13 @@ else if(auton == 4) { //Red low flag
   autoReset();
   pros::delay(400);  //pause to intake ball
   runningSpeed = -7;
-  while(frontLeft.get_position() > -1055) {
+  while(frontLeft.get_position() > -1000) {
     autoDrive(-140);
   }
   autoDrive(0);
   autoReset();
-  pros::delay(450);
-  while(frontLeft.get_position() > -250 && frontRight.get_position() < 250) {
+  pros::delay(250);
+  while(frontLeft.get_position() > -286 && frontRight.get_position() < 286) {
     frontRight.move_velocity(75);
     backRight.move_velocity(75);
     frontLeft.move_velocity(-75);
@@ -423,6 +424,7 @@ else if(auton == 4) { //Red low flag
   }
   autoDrive(0);
   autoReset();
+  pros::delay(250);
   while(frontLeft.get_position() < 215) { //moving forward for first shot
     autoDrive(75);
   }
@@ -444,7 +446,7 @@ else if(auton == 4) { //Red low flag
   pros::delay(800);
   setIndexer(0);
   setIntake(0);
-  while(frontRight.get_position() < 10 && frontLeft.get_position() > -10) { //turn for low flag
+  while(frontRight.get_position() < 11 && frontLeft.get_position() > -11) { //turn for low flag
     frontLeft.move_velocity(-100);
     frontRight.move_velocity(100);
     backLeft.move_velocity(-100);
@@ -677,7 +679,6 @@ else if(auton == 5) { //Blue low flag THIS NEEdS TO BE UPDATED.
   autoDrive(0);
   autoReset();
 }
-
 
 
 else if(auton == 6) { //programming skills

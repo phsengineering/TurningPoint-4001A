@@ -38,6 +38,8 @@ void on_center_button() {
 void initialize() {
 	pros::lcd::initialize();
 	auton = 0;
+
+
 	pros::lcd::set_text(1, "169A holecounted us");
 	pros::lcd::set_text(2, "RED autonomous");
 	pros::lcd::set_text(3, "729M");
